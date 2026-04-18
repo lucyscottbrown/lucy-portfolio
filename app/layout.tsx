@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import Nav from "@/components/Nav";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Lucy Brown",
-  description: "Portfolio",
+  title: "Lucy Scott Brown",
+  description:
+    "Product, go-to-market, and positioning for companies at the point where things need to start working properly.",
 };
 
 export default function RootLayout({
@@ -24,14 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-          <Nav />
-          <main className="flex-1 px-8 py-12">{children}</main>
-        </body>
+    <html lang="en" className={inter.variable}>
+      <body className="min-h-screen bg-white text-[#0a0a0a]">
+        <Nav />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
