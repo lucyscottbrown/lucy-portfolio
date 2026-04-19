@@ -10,19 +10,16 @@ export default function Home() {
       <section className="py-16 grid grid-cols-[1fr_auto] gap-10 items-start">
         <div className="flex flex-col gap-5">
           <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400">
-            Product Manager
+            Product &amp; GTM Strategy
           </p>
           <h1 className="text-[44px] leading-[1.1] font-semibold tracking-tight">
-            Product, go-to-market, and positioning for companies at the point
-            where things need to start working{" "}
-            <em className="text-[#185FA5]">properly.</em>
+            For companies where the product works but the business hasn't{" "}
+            <em className="text-[#185FA5]">clicked</em> yet.
           </h1>
           <p className="text-[15px] leading-[1.75] text-gray-500 max-w-[480px]">
             Eight years building products across crypto payments, blockchain
-            analytics, and B2B SaaS. I work across product, go-to-market, and
-            positioning — usually in companies that are past early chaos but
-            haven't yet found their operating rhythm. That's the bit I'm good
-            at.
+            analytics, and B2B SaaS. I work across product, GTM, and
+            positioning — and I'll tell you when your hypothesis is wrong.
           </p>
           <div className="flex gap-3 mt-1">
             <Link
@@ -51,25 +48,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stat strip */}
-      <section className="border-t border-gray-200 border-b py-8 grid grid-cols-3">
+      {/* Chip strip */}
+      <section className="border-t border-gray-200 border-b py-5 flex flex-wrap gap-2">
         {[
-          { value: "8", suffix: "+", label: "Years in product" },
-          { value: "5", suffix: "", label: "Case studies" },
-          { value: "3", suffix: "", label: "Industries" },
-        ].map(({ value, suffix, label }, i) => (
-          <div
-            key={label}
-            className={`flex flex-col gap-1 px-5 ${i > 0 ? "border-l border-gray-200" : ""}`}
+          "GTM strategy",
+          "Product",
+          "Crypto & payments",
+          "Blockchain analytics",
+          "B2B SaaS",
+          "Regulated markets",
+          "Early-growth stage",
+        ].map((tag) => (
+          <span
+            key={tag}
+            className="text-[12px] font-medium text-gray-600 bg-gray-100 px-3 py-1.5 rounded-full"
           >
-            <span className="text-[30px] font-medium leading-none tracking-tight tabular-nums">
-              {value}
-              {suffix && (
-                <span className="text-[#185FA5]">{suffix}</span>
-              )}
-            </span>
-            <span className="text-[12px] text-gray-400">{label}</span>
-          </div>
+            {tag}
+          </span>
         ))}
       </section>
 
