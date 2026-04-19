@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { projects } from "@/lib/projects";
 
 export default function Home() {
@@ -7,7 +8,7 @@ export default function Home() {
   return (
     <div className="max-w-[720px] mx-auto px-10">
       {/* Hero */}
-      <section className="py-16 grid grid-cols-[1fr_auto] gap-10 items-start">
+      <section className="py-16 grid grid-cols-[1fr_220px] gap-12 items-start">
         <div className="flex flex-col gap-5">
           <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400">
             Product &amp; GTM Strategy
@@ -37,14 +38,15 @@ export default function Home() {
             </a>
           </div>
         </div>
-        {/* Headshot placeholder */}
-        <div
-          className="w-[140px] h-[165px] rounded-[8px] bg-gray-100 flex-shrink-0 flex items-center justify-center"
-          aria-hidden="true"
-        >
-          <span className="text-[11px] text-gray-400 uppercase tracking-widest">
-            Photo
-          </span>
+        {/* Headshot */}
+        <div className="relative w-[220px] h-[280px] rounded-[8px] overflow-hidden flex-shrink-0">
+          <Image
+            src="/headshot.jpg"
+            alt="Lucy Scott Brown"
+            fill
+            className="object-cover object-top"
+            priority
+          />
         </div>
       </section>
 
