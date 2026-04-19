@@ -17,8 +17,8 @@ export default function Home() {
             I'm Lucy Scott Brown.
           </h1>
           <p className="text-[16px] leading-[1.65] text-gray-500 max-w-[400px]">
-            Product and GTM strategy for B2B tech companies — I work across
-            product, commercial, and the gap between the two.
+            I do Product and GTM strategy for B2B tech companies — working
+            across product, commercial, and the gap between the two.
           </p>
           <Link
             href="/projects"
@@ -37,9 +37,9 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-0.5">
               <span className="text-[28px] font-semibold leading-none tracking-tight">
-                £1M<span className="text-[#185FA5]">+</span>
+                Global
               </span>
-              <span className="text-[12px] text-gray-400 mt-1">Funding influenced</span>
+              <span className="text-[12px] text-gray-400 mt-1">Impact</span>
             </div>
           </div>
         </div>
@@ -93,23 +93,16 @@ export default function Home() {
           <p className="text-[15px] leading-[1.75] text-gray-600">
             My work spans the full product lifecycle: market sizing and GTM
             strategy, roadmap and OKRs, engineering delivery, and the internal
-            change management that makes it all stick. I've led teams of up to 8
-            engineers, run international market research across four continents,
-            and built the kind of cross-functional working practices that outlast
-            any single project.
+            change management that makes it all stick. I've led teams of up to
+            15 engineers, run international market research across four
+            continents, and built the kind of cross-functional working practices
+            that outlast any single project.
           </p>
-          <div className="flex gap-6 mt-2 pt-4 border-t border-gray-100 text-[13px] text-gray-400">
-            <span>8<span className="text-[#185FA5]">+</span> years experience</span>
-            <span className="text-gray-200">·</span>
-            <span>4 continents</span>
-            <span className="text-gray-200">·</span>
-            <span>$16M SOM sized</span>
-          </div>
         </div>
       </section>
 
       {/* ── Experience timeline ── */}
-      <section className="border-t border-gray-200 py-12">
+      <section className="bg-[#f0f7f4] -mx-10 px-10 py-12 mt-0">
         <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-8">
           Experience
         </h2>
