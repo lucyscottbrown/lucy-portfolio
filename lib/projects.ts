@@ -11,6 +11,20 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "lacunafit",
+    title: "LacunaFit",
+    subtitle: "Founder · 2020–2024 · DTC e-commerce, petite women's clothing",
+    tag: "Venture Creation",
+    description:
+      "Founded and scaled a niche DTC e-commerce brand from zero — identifying an underserved customer segment, launching 10 products across UK and Ireland, and generating £220k in revenue over four years.",
+    problem:
+      "Petite women's clothing is a chronically underserved segment — most brands treat it as an afterthought, producing cut-down versions of standard sizing rather than garments designed for the proportions of the customer. The gap wasn't just a product gap; it was a trust gap. Petite shoppers had been burned enough times that they were sceptical of new brands claiming to solve the problem. The challenge was to build something that genuinely worked for this customer, earn their trust, and do it without external funding.",
+    whatIDid:
+      "I built LacunaFit from scratch and ran every part of it myself. That meant product development, supplier sourcing and management, fulfilment partnerships, customer research, and all growth and distribution channels — email lifecycle via Omnisend, social media (growing to 9k+ followers), and direct customer relationships.\n\nThe product decisions were grounded in demand signals from the start. I didn't launch a range and hope — I tested, iterated, and made explicit decisions about what to keep, kill, or pivot based on unit economics and customer feedback. That discipline is what allowed a bootstrapped brand to stay viable across four years and 10 product launches.\n\nThroughout, I owned the full customer lifecycle: acquisition, conversion, retention, and resolution. A 48% returning customer rate wasn't a metric I optimised for in isolation — it was the result of genuinely understanding what the customer needed and consistently delivering it.\n\nWhen the margin profile no longer justified continuing to scale, I made the decision to close the business. That was a deliberate, data-driven call — not a failure of nerve.",
+    outcome:
+      "£220k in revenue across UK and Ireland, 48% returning customer rate, and an average 4.8/5 star rating across four years. Ten products launched and validated against real demand. A business built, run, and closed on my own terms.",
+  },
+  {
     slug: "clavium-gtm",
     title: "Clavium — Treasury Manager GTM",
     subtitle: "Product Manager · 2025 · Crypto payments",
