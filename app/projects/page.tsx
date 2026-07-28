@@ -14,7 +14,7 @@ export default function Projects() {
           Projects
         </h1>
         <p className="text-[15px] leading-[1.75] text-gray-500 max-w-[480px]">
-          A selection of product work across crypto, industrial IoT, and early-stage ventures.
+          A selection of product work across applied AI, crypto, industrial IoT, and early-stage ventures.
         </p>
       </section>
 

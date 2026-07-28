@@ -66,6 +66,14 @@ export default async function ProjectPage({
           {project.title}
         </h1>
         <p className="text-[13px] text-gray-400">{project.subtitle}</p>
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            className="inline-block mt-6 text-[13px] font-medium text-[#185FA5] border border-[#185FA5] rounded px-4 py-2 hover:bg-[#185FA5] hover:text-white transition-colors"
+          >
+            Open the live tool →
+          </a>
+        )}
       </section>
 
       {/* Case study body */}

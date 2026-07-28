@@ -7,9 +7,25 @@ export type Project = {
   problem: string;
   whatIDid: string;
   outcome: string;
+  liveUrl?: string;
 };
 
 export const projects: Project[] = [
+  {
+    slug: "ai-scorecard",
+    title: "Public-Sector AI Use-Case Scorecard",
+    subtitle: "Self-initiated · 2026 · Applied AI / public sector",
+    tag: "Applied AI",
+    liveUrl: "/ai-scorecard",
+    description:
+      "An interactive tool that scopes a public-sector AI use case, scores it for priority, and generates the evaluation set and production-readiness gate it needs to move from pilot to production. Prototyped hands-on in Claude Code.",
+    problem:
+      "Most public-sector AI never makes it out of the demo. A model does something impressive in a workshop, everyone's excited, and then it dies in the gap between that demo and a system a ministry can actually trust and run. The hard part isn't the model — it's deciding which use cases are worth doing, being honest about the risk, and knowing what \"reliable enough to ship\" concretely means before anyone builds.",
+    whatIDid:
+      "I built a working tool that models the front of that funnel — the part a forward-deployed product person owns before engineering starts. You scope a candidate use case (entity, problem, users, solution pattern), score it across five levers (mission impact, feasibility, data readiness, trust and risk exposure, time to value), and it computes a priority and plots it on a value-versus-feasibility quadrant.\n\nThe part I care most about is what happens next: it generates an evaluation plan — the specific metrics and eval set — that changes by solution pattern, because evals for document extraction look nothing like evals for an agentic workflow or a forecasting model. And it produces a production-readiness gate that gets stricter as risk rises, up to human-in-the-loop review, red-teaming, and data residency for sovereign contexts.\n\nI prototyped the whole thing hands-on in Claude Code. The scoring is deliberately transparent and opinionated — not a validated model, but a way to force an honest conversation about reliability before build, which is exactly the conversation these projects tend to skip.",
+    outcome:
+      "A self-contained, working demonstration of how I'd take public-sector AI from pilot to production — and of a way of working I think is rare in product: building the thing, not just describing it. Open the live tool to try it.",
+  },
   {
     slug: "lacunafit",
     title: "LacunaFit",
