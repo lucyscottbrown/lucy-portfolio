@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public-Sector AI Use-Case Scorecard · Lucy Scott Brown</title>
+<meta name="description" content="An interactive tool to scope a public-sector AI use case, score it for priority, and generate the evaluation set and production-readiness gate it needs to move from pilot to production.">
+<meta name="author" content="Lucy Scott Brown">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Public-Sector AI Use-Case Scorecard">
+<meta property="og:description" content="An interactive tool to scope a public-sector AI use case, score it for priority, and generate the evaluation set and production-readiness gate it needs to move from pilot to production.">
+<meta property="og:url" content="https://lucyscottbrown.com/ai-scorecard">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Public-Sector AI Use-Case Scorecard">
+<meta name="twitter:description" content="An interactive tool to scope a public-sector AI use case, score it for priority, and generate the evaluation set and production-readiness gate it needs to move from pilot to production.">
+<link rel="icon" href="/favicon.svg">
+<style>
+  :root {
+    --paper:#F1F4F4; --panel:#FBFCFC; --panel-2:#EDF1F1;
+    --ink:#0E1618; --ink-soft:#33474B; --muted:#5F7377; --line:#D3DCDC;
+    --accent:#0F5C63; --accent-bright:#14808A; --accent-ink:#0A3D42;
+    --ochre:#A8641C;
+    --good:#2E7D5B; --good-bg:#E1F0E7;
+    --warn:#9C6B12; --warn-bg:#F4E9CE;
+    --crit:#AF432B; --crit-bg:#F5E0DA;
+    --shadow:0 1px 2px rgba(14,22,24,.05), 0 8px 24px -12px rgba(14,22,24,.18);
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#0C1213; --panel:#141D1F; --panel-2:#0F191A;
+      --ink:#EAF1F0; --ink-soft:#B6C6C6; --muted:#829595; --line:#243435;
+      --accent:#2FA0AA; --accent-bright:#43BCC6; --accent-ink:#B7E7EB;
+      --ochre:#D6944A;
+      --good:#5FBF8E; --good-bg:#15271F;
+      --warn:#D6A93F; --warn-bg:#2A2213;
+      --crit:#E0806A; --crit-bg:#2C1712;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#F1F4F4; --panel:#FBFCFC; --panel-2:#EDF1F1;
+    --ink:#0E1618; --ink-soft:#33474B; --muted:#5F7377; --line:#D3DCDC;
+    --accent:#0F5C63; --accent-bright:#14808A; --accent-ink:#0A3D42; --ochre:#A8641C;
+    --good:#2E7D5B; --good-bg:#E1F0E7; --warn:#9C6B12; --warn-bg:#F4E9CE; --crit:#AF432B; --crit-bg:#F5E0DA;
+    --shadow:0 1px 2px rgba(14,22,24,.05), 0 8px 24px -12px rgba(14,22,24,.18);
+  }
+  :root[data-theme="dark"] {
+    --paper:#0C1213; --panel:#141D1F; --panel-2:#0F191A;
+    --ink:#EAF1F0; --ink-soft:#B6C6C6; --muted:#829595; --line:#243435;
+    --accent:#2FA0AA; --accent-bright:#43BCC6; --accent-ink:#B7E7EB; --ochre:#D6944A;
+    --good:#5FBF8E; --good-bg:#15271F; --warn:#D6A93F; --warn-bg:#2A2213; --crit:#E0806A; --crit-bg:#2C1712;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing:border-box; }
+  body, .wrap { margin:0; }
+  .wrap {
+    font-family:var(--sans); color:var(--ink); background:
+      radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%),
+      var(--paper);
+    min-height:100vh; padding:clamp(18px,3vw,40px); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .inner { max-width:1120px; margin:0 auto; }
+
+  /* Masthead */
+  .mast { margin-bottom:22px; }
+  .eyebrow {
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; display:inline-flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before { content:""; width:22px; height:1.5px; background:var(--accent); display:inline-block; }
+  .mast h1 {
+    font-family:var(--serif); font-weight:600; font-size:clamp(27px,4.2vw,42px);
+    line-height:1.05; letter-spacing:-.01em; margin:.32em 0 .18em; text-wrap:balance;
+    color:var(--ink);
+  }
+  .mast .sub { color:var(--ink-soft); max-width:64ch; font-size:clamp(14.5px,1.5vw,16.5px); margin:0; }
+
+  .examples { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:18px; }
+  .ex-label { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-right:2px; }
+  .chip {
+    font-family:var(--sans); font-size:13px; color:var(--ink-soft); cursor:pointer;
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:6px 13px;
+    transition:.16s ease; font-weight:500;
+  }
+  .chip:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
+  .chip.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  :root[data-theme="dark"] .chip.active, @media (prefers-color-scheme:dark){ .chip.active{ color:#08181a; } }
+
+  /* Board */
+  .board { display:grid; grid-template-columns: 1fr 1.05fr; gap:18px; align-items:start; }
+  @media (max-width:860px){ .board{ grid-template-columns:1fr; } }
+
+  .panel {
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .panel-h {
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    padding:15px 18px; border-bottom:1px solid var(--line); background:var(--panel-2);
+  }
+  .panel-h h2 { font-family:var(--serif); font-weight:600; font-size:17px; margin:0; letter-spacing:-.01em; }
+  .panel-h .note { font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); }
+  .panel-body { padding:18px; }
+
+  .field { margin-bottom:15px; }
+  .field:last-child { margin-bottom:0; }
+  label.lab { display:block; font-size:12px; font-weight:600; letter-spacing:.02em; color:var(--ink-soft); margin-bottom:6px; }
+  input[type=text], textarea, select {
+    width:100%; font-family:var(--sans); font-size:14px; color:var(--ink);
+    background:var(--paper); border:1px solid var(--line); border-radius:9px; padding:9px 11px;
+    transition:.15s; resize:vertical;
+  }
+  input[type=text]:focus, textarea:focus, select:focus {
+    outline:none; border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  textarea { min-height:52px; line-height:1.4; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:440px){ .two-col{ grid-template-columns:1fr; } }
+
+  /* Sliders */
+  .sliders { display:flex; flex-direction:column; gap:14px; margin-top:4px; }
+  .slider { }
+  .slider-top { display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:5px; }
+  .slider-top .name { font-size:13px; font-weight:600; color:var(--ink); }
+  .slider-top .help { font-size:11.5px; color:var(--muted); flex:1; text-align:left; }
+  .slider-top .val { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--accent); font-variant-numeric:tabular-nums; }
+  input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height:5px; border-radius:99px;
+    background:linear-gradient(90deg, var(--accent) var(--pct,50%), var(--panel-2) var(--pct,50%)); cursor:pointer; }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:17px; height:17px; border-radius:50%;
+    background:var(--panel); border:2px solid var(--accent); box-shadow:0 1px 3px rgba(0,0,0,.2); cursor:pointer; transition:.12s; }
+  input[type=range]::-webkit-slider-thumb:hover{ transform:scale(1.12); }
+  input[type=range]::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:var(--panel); border:2px solid var(--accent); cursor:pointer; }
+  input[type=range]:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
+
+  /* Readout */
+  .verdict { display:flex; align-items:center; gap:14px; padding:16px 18px; border-bottom:1px solid var(--line); }
+  .verdict .badge {
+    font-family:var(--mono); font-weight:600; font-size:12px; letter-spacing:.03em; text-transform:uppercase;
+    padding:6px 12px; border-radius:8px; white-space:nowrap;
+  }
+  .verdict .vtext { font-size:13.5px; color:var(--ink-soft); }
+  .v-good .badge{ background:var(--good-bg); color:var(--good); } .v-good{ border-left:none; }
+  .v-warn .badge{ background:var(--warn-bg); color:var(--warn); }
+  .v-crit .badge{ background:var(--crit-bg); color:var(--crit); }
+
+  .metrics-row { display:grid; grid-template-columns:auto 1fr; gap:20px; padding:18px; align-items:center; border-bottom:1px solid var(--line); }
+  @media (max-width:520px){ .metrics-row{ grid-template-columns:1fr; } }
+
+  .priority { text-align:center; }
+  .priority .num { font-family:var(--serif); font-weight:600; font-size:52px; line-height:1; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .priority .den { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:2px; letter-spacing:.05em; }
+  .priority .q { display:inline-block; margin-top:9px; font-size:11.5px; font-weight:600; color:var(--ochre);
+    font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em; }
+
+  /* Quadrant */
+  .quad-wrap { display:flex; justify-content:center; }
+  svg.quad { width:100%; max-width:230px; height:auto; }
+  .quad-axis { font-family:var(--mono); font-size:7.5px; fill:var(--muted); letter-spacing:.04em; text-transform:uppercase; }
+  .quad-lab { font-family:var(--sans); font-size:8px; fill:var(--muted); font-weight:600; }
+
+  .section-t { font-family:var(--mono); font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); margin:0 0 11px; font-weight:600; }
+  .rd-section { padding:18px; border-bottom:1px solid var(--line); }
+  .rd-section:last-of-type{ border-bottom:none; }
+  .tag { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-family:var(--mono); color:var(--accent-ink);
+    background:color-mix(in srgb, var(--accent) 12%, transparent); border:1px solid color-mix(in srgb,var(--accent) 28%, transparent);
+    padding:3px 9px; border-radius:6px; margin-bottom:12px; font-weight:600; }
+  ul.list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  ul.list li { position:relative; padding-left:20px; font-size:13.5px; color:var(--ink-soft); line-height:1.45; }
+  ul.list li::before { content:""; position:absolute; left:2px; top:8px; width:6px; height:6px; border-radius:2px; background:var(--accent); }
+  ul.gate li::before { border-radius:50%; background:none; border:1.5px solid var(--good); top:6px; width:8px; height:8px; }
+  ul.gate li.strict::before { border-color:var(--warn); }
+  ul.gate li.hard::before { border-color:var(--crit); }
+
+  .actions { padding:16px 18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .btn {
+    font-family:var(--sans); font-size:13.5px; font-weight:600; cursor:pointer; border-radius:9px; padding:9px 16px;
+    background:var(--accent); color:#fff; border:1px solid var(--accent); transition:.15s; display:inline-flex; align-items:center; gap:7px;
+  }
+  .btn:hover{ background:var(--accent-bright); border-color:var(--accent-bright); }
+  .btn.ghost{ background:transparent; color:var(--accent); }
+  .btn.ghost:hover{ background:color-mix(in srgb,var(--accent) 10%, transparent); }
+  .copied { font-size:12.5px; color:var(--good); font-family:var(--mono); opacity:0; transition:.2s; }
+  .copied.show{ opacity:1; }
+
+  .foot { max-width:1120px; margin:24px auto 0; padding-top:16px; border-top:1px solid var(--line);
+    color:var(--muted); font-size:12.5px; line-height:1.5; display:flex; flex-wrap:wrap; gap:6px 18px; justify-content:space-between; }
+  .foot strong { color:var(--ink-soft); font-weight:600; }
+  @media (prefers-reduced-motion:reduce){ * { transition:none !important; } }
+
+  html, body { margin:0; padding:0; }
+  body { background:var(--paper); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="inner">
+    <header class="mast">
+      <span class="eyebrow">Forward-deployed toolkit · working demo</span>
+      <h1>Public-Sector AI Use-Case Scorecard</h1>
+      <p class="sub">Scope a candidate use case, score it for priority against value and feasibility, and generate the evaluation set and production-readiness gate it needs to move from pilot to production. Because most public-sector AI dies in the gap between a promising demo and a system a ministry can actually trust.</p>
+      <div class="examples" id="examples">
+        <span class="ex-label">Load an example</span>
+      </div>
+    </header>
+
+    <main class="board">
+      <!-- CONTROLS -->
+      <section class="panel">
+        <div class="panel-h"><h2>Scope</h2><span class="note">the workshop intake</span></div>
+        <div class="panel-body">
+          <div class="field">
+            <label class="lab" for="entity">Government entity</label>
+            <input type="text" id="entity" placeholder="e.g. Ministry of Interior">
+          </div>
+          <div class="field">
+            <label class="lab" for="ucname">Use case</label>
+            <input type="text" id="ucname" placeholder="e.g. Citizen enquiry assistant">
+          </div>
+          <div class="field">
+            <label class="lab" for="problem">Problem it solves</label>
+            <textarea id="problem" placeholder="What outcome does the entity need, and for whom?"></textarea>
+          </div>
+          <div class="two-col">
+            <div class="field">
+              <label class="lab" for="users">Primary users</label>
+              <input type="text" id="users" placeholder="e.g. Contact-centre agents">
+            </div>
+            <div class="field">
+              <label class="lab" for="uctype">Solution pattern</label>
+              <select id="uctype">
+                <option value="generation">Generation / RAG assistant</option>
+                <option value="extraction">Document extraction</option>
+                <option value="classification">Classification / routing</option>
+                <option value="agentic">Agentic workflow</option>
+                <option value="forecasting">Forecasting / analytics</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:20px;">
+            <p class="section-t">Score the use case (1 low – 5 high)</p>
+            <div class="sliders" id="sliders"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- READOUT -->
+      <section class="panel">
+        <div class="panel-h"><h2>Read</h2><span class="note">live assessment</span></div>
+        <div id="verdict" class="verdict v-good">
+          <span class="badge">—</span>
+          <span class="vtext" id="vtext">—</span>
+        </div>
+
+        <div class="metrics-row">
+          <div class="priority">
+            <div class="num" id="pnum">0</div>
+            <div class="den">PRIORITY / 100</div>
+            <div class="q" id="quadlabel">—</div>
+          </div>
+          <div class="quad-wrap" id="quadWrap"></div>
+        </div>
+
+        <div class="rd-section">
+          <p class="section-t">Evaluation plan · what "reliable" must mean here</p>
+          <span class="tag" id="evalTag">—</span>
+          <p class="section-t" style="margin-top:2px;">Metrics to track</p>
+          <ul class="list" id="metrics"></ul>
+          <p class="section-t" style="margin-top:16px;">Eval set to build</p>
+          <ul class="list" id="evalset"></ul>
+        </div>
+
+        <div class="rd-section">
+          <p class="section-t">Production-readiness gate · scaled to risk</p>
+          <ul class="list gate" id="gate"></ul>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="copyBtn">Copy scoping summary</button>
+          <button class="btn ghost" id="resetBtn">Reset</button>
+          <span class="copied" id="copied">Copied to clipboard</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>A working demo by <strong>Lucy Scott Brown</strong> — prototyped hands-on in Claude Code. A view of how I'd help a public-sector team take AI from pilot to production: scoped, scored, and eval-ready.</span>
+      <span>Frameworks are opinionated defaults, not gospel — the point is a shared, honest conversation about reliability before build.</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DIMS = [
+    { key:"impact",   name:"Mission impact",    help:"How much the outcome matters to the entity's mandate" },
+    { key:"feas",     name:"Technical feasibility", help:"Can today's models do this reliably?" },
+    { key:"data",     name:"Data readiness",    help:"Is usable, accessible data available?" },
+    { key:"risk",     name:"Trust & risk exposure", help:"Cost of being wrong (raises the eval bar)" },
+    { key:"speed",    name:"Time to value",     help:"How quickly a first version can ship" }
+  ];
+
+  var EVAL = {
+    generation: { label:"Generation / RAG assistant",
+      metrics:["Groundedness / faithfulness to sources","Factual accuracy (rubric-scored)","Helpfulness against a task rubric","Refusal & safety-policy adherence","Measured hallucination rate"],
+      set:["Prompt set with reference answers or a scoring rubric","Retrieval ground-truth so citations are checkable","Adversarial & out-of-scope prompts","Sensitive-topic and policy edge cases"] },
+    extraction: { label:"Document extraction",
+      metrics:["Field-level precision & recall","Exact-match and normalised-match rate","Output schema validity","Groundedness (value truly present in source)"],
+      set:["Documents with ground-truth field annotations","Hard layouts: scans, tables, multi-column, handwriting","Out-of-template and adversarial documents"] },
+    classification: { label:"Classification / routing",
+      metrics:["Accuracy and macro-F1","Per-class precision & recall","Confusion matrix by class","Confidence calibration for hand-off thresholds"],
+      set:["Labelled golden set (≥300), class-balanced","Ambiguous / borderline cases oversampled","Held-out set never used during prompt iteration"] },
+    agentic: { label:"Agentic workflow",
+      metrics:["Task completion rate","Tool-call accuracy","Steps-to-completion / efficiency","Guardrail & permission adherence","End-to-end latency"],
+      set:["Scenario suite covering the core workflows","Sandbox with reversible actions before live","Red-team scenarios: prompt injection, over-reach","Long-horizon, multi-step cases"] },
+    forecasting: { label:"Forecasting / analytics",
+      metrics:["MAE / MAPE against actuals","Backtesting across seasons and regimes","Prediction-interval calibration","Bias by region / segment","Live drift monitoring"],
+      set:["Walk-forward historical hold-out windows","Stress periods: shocks and outliers","Full segment coverage (region, entity, asset)"] }
+  };
+
+  var EXAMPLES = [
+    { entity:"Ministry of Interior", ucname:"Citizen enquiry assistant", uctype:"generation",
+      problem:"24/7 grounded answers to citizen service questions, in Arabic and English, drawn from official policy.",
+      users:"Citizens + contact-centre agents", impact:5, feas:4, data:3, risk:4, speed:4 },
+    { entity:"Municipality — Permits", ucname:"Permit document extraction", uctype:"extraction",
+      problem:"Auto-extract fields from submitted permit PDFs to cut manual re-keying and speed approvals.",
+      users:"Permit officers", impact:4, feas:5, data:4, risk:2, speed:5 },
+    { entity:"National Energy Authority", ucname:"Regional demand forecasting", uctype:"forecasting",
+      problem:"Forecast regional electricity demand to optimise dispatch and cut reserve-generation cost.",
+      users:"Grid operations planners", impact:5, feas:3, data:4, risk:3, speed:3 },
+    { entity:"Ministry of Justice", ucname:"Case-triage agent", uctype:"agentic",
+      problem:"Triage incoming cases, gather the supporting documents, and draft a routing recommendation.",
+      users:"Case officers", impact:4, feas:2, data:2, risk:5, speed:2 }
+  ];
+
+  var state = Object.assign({}, EXAMPLES[0]);
+
+  // ---- build sliders ----
+  var slidersEl = document.getElementById("sliders");
+  DIMS.forEach(function(d){
+    var row = document.createElement("div"); row.className="slider";
+    row.innerHTML =
+      '<div class="slider-top"><span class="name">'+d.name+'</span>'+
+      '<span class="help">'+d.help+'</span>'+
+      '<span class="val" id="val-'+d.key+'">3</span></div>'+
+      '<input type="range" min="1" max="5" step="1" id="rng-'+d.key+'" aria-label="'+d.name+'">';
+    slidersEl.appendChild(row);
+    row.querySelector("input").addEventListener("input", function(e){
+      state[d.key] = +e.target.value; render();
+    });
+  });
+
+  // ---- example chips ----
+  var exEl = document.getElementById("examples");
+  EXAMPLES.forEach(function(ex, i){
+    var b = document.createElement("button");
+    b.className="chip"; b.textContent=ex.ucname; b.setAttribute("data-ex", i);
+    b.addEventListener("click", function(){ state = Object.assign({}, EXAMPLES[i]); syncInputs(); render(); markChip(i); });
+    exEl.appendChild(b);
+  });
+  function markChip(i){
+    document.querySelectorAll(".chip").forEach(function(c){
+      c.classList.toggle("active", +c.getAttribute("data-ex") === i);
+    });
+  }
+
+  // ---- text inputs ----
+  ["entity","ucname","problem","users"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", function(e){ state[id]=e.target.value; markChip(-1); render(true); });
+  });
+  document.getElementById("uctype").addEventListener("change", function(e){ state.uctype=e.target.value; render(); });
+
+  function syncInputs(){
+    document.getElementById("entity").value = state.entity||"";
+    document.getElementById("ucname").value = state.ucname||"";
+    document.getElementById("problem").value = state.problem||"";
+    document.getElementById("users").value = state.users||"";
+    document.getElementById("uctype").value = state.uctype||"generation";
+    DIMS.forEach(function(d){ document.getElementById("rng-"+d.key).value = state[d.key]; });
+  }
+
+  // ---- scoring ----
+  function scores(){
+    var value = state.impact*0.6 + state.speed*0.4;                       // 1..5
+    var feas  = state.feas*0.45 + state.data*0.35 + (6-state.risk)*0.20;  // 1..5
+    var priority = Math.round(((value*0.6 + feas*0.4) - 1) / 4 * 100);    // 0..100
+    return { value:value, feas:feas, priority:Math.max(0,Math.min(100,priority)) };
+  }
+  function quadrant(s){
+    var hiV = s.value>=3, hiF = s.feas>=3;
+    if(hiV&&hiF) return "Quick win";
+    if(hiV&&!hiF) return "Big bet";
+    if(!hiV&&hiF) return "Fill-in";
+    return "Deprioritise";
+  }
+  function verdict(){
+    if(state.risk>=4){
+      if(state.feas>=4 && state.data>=3) return {cls:"v-warn", badge:"Pilot with guardrails", text:"High-stakes: ships only with human-in-the-loop and a passing safety eval."};
+      return {cls:"v-crit", badge:"Not ready — de-risk first", text:"High risk with thin feasibility or data. Prove reliability offline before any live pilot."};
+    }
+    if(state.feas>=4 && state.data>=3) return {cls:"v-good", badge:"Ready to pilot", text:"Feasible with usable data and contained risk. Stand up the eval set and pilot."};
+    if(state.feas>=3 && state.data>=2) return {cls:"v-warn", badge:"Pilot with guardrails", text:"Workable, but close feasibility or data gaps and monitor closely in pilot."};
+    return {cls:"v-crit", badge:"Not ready — de-risk first", text:"Feasibility or data isn't there yet. Run a scoping spike before committing."};
+  }
+
+  // ---- quadrant svg ----
+  function drawQuad(s){
+    var W=230,H=200,pad=26, x0=pad, x1=W-pad, y0=H-pad, y1=14;
+    function px(v){ return x0 + (v-1)/4*(x1-x0); }
+    function py(v){ return y0 - (v-1)/4*(y0-y1); }
+    var mx=px(3), my=py(3);
+    var cx=px(s.feas), cy=py(s.value);
+    var svg =
+      '<svg class="quad" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Value versus feasibility quadrant">'+
+      '<rect x="'+mx+'" y="'+y1+'" width="'+(x1-mx)+'" height="'+(my-y1)+'" fill="var(--accent)" opacity="0.08"/>'+
+      '<line x1="'+mx+'" y1="'+y1+'" x2="'+mx+'" y2="'+y0+'" stroke="var(--line)" stroke-dasharray="3 3"/>'+
+      '<line x1="'+x0+'" y1="'+my+'" x2="'+x1+'" y2="'+my+'" stroke="var(--line)" stroke-dasharray="3 3"/>'+
+      '<line x1="'+x0+'" y1="'+y0+'" x2="'+x1+'" y2="'+y0+'" stroke="var(--muted)" stroke-width="1"/>'+
+      '<line x1="'+x0+'" y1="'+y0+'" x2="'+x0+'" y2="'+y1+'" stroke="var(--muted)" stroke-width="1"/>'+
+      '<text class="quad-lab" x="'+(x1-2)+'" y="'+(y1+9)+'" text-anchor="end">Quick wins</text>'+
+      '<text class="quad-lab" x="'+(x0+2)+'" y="'+(y1+9)+'">Big bets</text>'+
+      '<text class="quad-lab" x="'+(x1-2)+'" y="'+(y0-5)+'" text-anchor="end">Fill-ins</text>'+
+      '<text class="quad-axis" x="'+(x0-8)+'" y="'+((y0+y1)/2)+'" text-anchor="middle" transform="rotate(-90 '+(x0-14)+' '+((y0+y1)/2)+')">Value →</text>'+
+      '<text class="quad-axis" x="'+((x0+x1)/2)+'" y="'+(H-4)+'" text-anchor="middle">Feasibility →</text>'+
+      '<circle cx="'+cx+'" cy="'+cy+'" r="9" fill="var(--ochre)" opacity="0.18"/>'+
+      '<circle cx="'+cx+'" cy="'+cy+'" r="5" fill="var(--ochre)" stroke="var(--panel)" stroke-width="1.5"/>'+
+      '</svg>';
+    document.getElementById("quadWrap").innerHTML = svg;
+  }
+
+  function li(items, cls){
+    return items.map(function(t){ return '<li'+(cls?' class="'+cls+'"':'')+'>'+t+'</li>'; }).join("");
+  }
+
+  function gateItems(){
+    var base = [
+      {t:"Owner and sign-off named on the entity side", c:""},
+      {t:"Baseline metric and target agreed before build", c:""},
+      {t:"Eval set frozen and version-controlled", c:""},
+      {t:"Monitoring on live inputs and outputs", c:""}
+    ];
+    if(state.risk>=3){
+      base.push({t:"Human-in-the-loop on high-stakes outputs", c:"strict"});
+      base.push({t:"Rollback / fallback path defined", c:"strict"});
+      base.push({t:"Red-team pass on safety and prompt injection", c:"strict"});
+    }
+    if(state.risk>=4){
+      base.push({t:"Independent review before go-live", c:"hard"});
+      base.push({t:"Audit log of decisions and overrides", c:"hard"});
+      base.push({t:"Data residency / sovereignty confirmed", c:"hard"});
+    }
+    return base;
+  }
+
+  function render(skipSliders){
+    // slider values + fill
+    DIMS.forEach(function(d){
+      var v = state[d.key];
+      document.getElementById("val-"+d.key).textContent = v;
+      var rng = document.getElementById("rng-"+d.key);
+      if(!skipSliders) rng.value = v;
+      rng.style.setProperty("--pct", ((v-1)/4*100)+"%");
+    });
+
+    var s = scores();
+    document.getElementById("pnum").textContent = s.priority;
+    document.getElementById("quadlabel").textContent = quadrant(s);
+    drawQuad(s);
+
+    var v = verdict();
+    var vEl = document.getElementById("verdict");
+    vEl.className = "verdict "+v.cls;
+    vEl.querySelector(".badge").textContent = v.badge;
+    document.getElementById("vtext").textContent = v.text;
+
+    var e = EVAL[state.uctype];
+    document.getElementById("evalTag").textContent = e.label;
+    document.getElementById("metrics").innerHTML = li(e.metrics);
+    document.getElementById("evalset").innerHTML = li(e.set);
+    document.getElementById("gate").innerHTML = gateItems().map(function(g){
+      return '<li'+(g.c?' class="'+g.c+'"':'')+'>'+g.t+'</li>';
+    }).join("");
+  }
+
+  // ---- copy summary ----
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var s = scores(), v = verdict(), e = EVAL[state.uctype];
+    var lines = [];
+    lines.push("AI USE-CASE SCORECARD");
+    lines.push("Entity: "+(state.entity||"—"));
+    lines.push("Use case: "+(state.ucname||"—")+"  ["+e.label+"]");
+    lines.push("Problem: "+(state.problem||"—"));
+    lines.push("Users: "+(state.users||"—"));
+    lines.push("");
+    lines.push("Priority: "+s.priority+"/100  ("+quadrant(s)+")");
+    lines.push("Scores (1-5): impact "+state.impact+" · feasibility "+state.feas+" · data "+state.data+" · risk "+state.risk+" · time-to-value "+state.speed);
+    lines.push("Verdict: "+v.badge+" — "+v.text);
+    lines.push("");
+    lines.push("Metrics to track: "+e.metrics.join("; "));
+    lines.push("Eval set to build: "+e.set.join("; "));
+    lines.push("Readiness gate: "+gateItems().map(function(g){return g.t;}).join("; "));
+    lines.push("");
+    lines.push("— Scored with the Public-Sector AI Use-Case Scorecard");
+    var txt = lines.join("\n");
+    var done = function(){ var c=document.getElementById("copied"); c.classList.add("show"); setTimeout(function(){c.classList.remove("show");},1800); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, done); }
+    else { done(); }
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    state = { entity:"", ucname:"", problem:"", users:"", uctype:"generation", impact:3, feas:3, data:3, risk:3, speed:3 };
+    syncInputs(); markChip(-1); render();
+  });
+
+  // init
+  syncInputs(); render(); markChip(0);
+})();
+</script>
+</body>
+</html>
