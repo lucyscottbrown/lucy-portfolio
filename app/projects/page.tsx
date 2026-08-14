@@ -14,7 +14,9 @@ export default function Projects() {
           Projects
         </h1>
         <p className="text-[15px] leading-[1.75] text-gray-500 max-w-[480px]">
-          A selection of product work across applied AI, crypto, industrial IoT, and early-stage ventures.
+          Product work across applied AI, crypto, industrial IoT and
+          early-stage ventures. Each one has the problem, what I did, and what
+          actually came out of it.
         </p>
       </section>
 
@@ -38,18 +40,12 @@ export default function Projects() {
                   {featured.description}
                 </p>
               </div>
-              <span
-                className="text-[52px] font-medium leading-none select-none flex-shrink-0"
-                style={{ color: "#e5e5e5" }}
-              >
-                01
-              </span>
             </div>
           </Link>
 
           {/* 2-col grid */}
           <div className="grid grid-cols-2 gap-4">
-            {rest.map((project, i) => (
+            {rest.map((project) => (
               <Link
                 key={project.slug}
                 href={`/projects/${project.slug}`}

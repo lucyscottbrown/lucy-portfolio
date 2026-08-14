@@ -16,3 +16,175 @@ body {
   font-family: var(--font-inter, Arial, sans-serif);
   -webkit-font-smoothing: antialiased;
 }
+
+/* --- Bookshelf ---------------------------------------------------------- */
+
+.shelf {
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+  /* Scaled down on narrow viewports so a full shelf still fits the column
+     without clipping the end spines. */
+  --shelf-scale: 1;
+}
+
+@media (max-width: 640px) {
+  .shelf {
+    --shelf-scale: 0.78;
+  }
+}
+
+.shelf-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  transform-style: preserve-3d;
+}
+
+.book {
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: none;
+  flex-shrink: 0;
+  width: calc(var(--thickness) * var(--shelf-scale));
+  height: calc(var(--height) * var(--shelf-scale));
+}
+
+/* Hover just nudges the book proud of the shelf. */
+.book:hover,
+.book:focus-visible {
+  transform: translateY(-14px);
+}
+
+.book:focus-visible {
+  outline: 2px solid var(--color-accent, #185fa5);
+  outline-offset: 6px;
+}
+
+/* Selecting lifts the book clear of its neighbours and turns it a full 90deg,
+   so the cover ends up square on to the viewer rather than at an angle. */
+.book[data-selected="true"],
+.book[data-selected="true"]:hover {
+  transform: translateY(-52px) rotateY(-90deg);
+  z-index: 2;
+}
+
+/* The spine — the face you see head-on. */
+.book-spine {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 1px 2px 2px 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 12px 0;
+  gap: 10px;
+  box-shadow: inset -6px 0 12px -6px rgb(0 0 0 / 0.45),
+    inset 3px 0 6px -3px rgb(255 255 255 / 0.18);
+  overflow: hidden;
+}
+
+/* Vertical spine lettering. */
+.book-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  flex: 1;
+  min-height: 0;
+}
+
+.book-author {
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  flex-shrink: 0;
+  max-height: 96px;
+}
+
+/* Head and tail bands, the way cloth bindings have them. */
+.book-band {
+  width: 100%;
+  height: 3px;
+  flex-shrink: 0;
+  background: currentColor;
+  opacity: 0.28;
+}
+
+/* The front cover, hinged at the spine's right edge. Only visible on turn. */
+.book-cover {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  height: 100%;
+  width: calc(var(--cover-width) * var(--shelf-scale));
+  /* Hinged on its LEFT edge, at the spine's right edge. Hinging on the right
+     edge instead puts the panel in the correct place but leaves its printed
+     face pointing away from the viewer — which is what mirrored the text.
+     A true 90deg, so that turning the book -90deg presents the cover flat. */
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  border-radius: 2px 1px 1px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px 14px;
+  gap: 4px;
+  box-shadow: inset 0 0 30px rgb(0 0 0 / 0.25);
+  /* Hidden at rest — otherwise perspective splays every cover open on the
+     shelf. It swings into view only when a book is pulled out. */
+  opacity: 0;
+  transition: opacity 200ms ease 60ms;
+}
+
+.book[data-selected="true"] .book-cover {
+  opacity: 1;
+}
+
+.book-cover-title {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+
+.book-cover-author {
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  opacity: 0.65;
+}
+
+/* The shelf board the books stand on. */
+.shelf-board {
+  height: 8px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(180deg, #eadcc4 0%, #d3ba95 55%, #ac8f68 100%);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.12), 0 10px 18px -12px rgb(0 0 0 / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book {
+    transition: none;
+  }
+  .book:hover,
+  .book:focus-visible,
+  .book[data-selected="true"] {
+    transform: none;
+  }
+}

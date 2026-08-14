@@ -11,7 +11,7 @@ export const timeline: TimelineEntry[] = [
     company: "Clavium (formerly The Workshop)",
     role: "Product Manager",
     location: "London, UK",
-    period: "Jan 2025 – Present",
+    period: "Jan 2025 – Jun 2026",
     description:
       "Led GTM strategy for treasury management platform; sized SOM at $16M ARR. Drove product strategy, roadmap, OKRs and KPIs for blockchain analytics platform. Established and led company-wide AI working group.",
   },
@@ -32,7 +32,7 @@ export const timeline: TimelineEntry[] = [
       "Led blockchain analytics risk management solution, resulting in 1,000+ daily transactions and $50k+ cost savings. Managed team of 12 international engineers.",
   },
   {
-    company: "Shell — Remote Sense",
+    company: "Shell - Remote Sense",
     role: "Product Manager",
     location: "London, UK",
     period: "Dec 2019 – Mar 2022",
@@ -40,7 +40,7 @@ export const timeline: TimelineEntry[] = [
       "Delivered $400k revenue from 6 new B2B customers. Led global product launch across 5 markets.",
   },
   {
-    company: "Shell — Digital Innovation",
+    company: "Shell - Digital Innovation",
     role: "Venture Associate",
     location: "London, UK",
     period: "Oct 2018 – Dec 2019",

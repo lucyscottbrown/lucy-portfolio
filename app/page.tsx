@@ -14,11 +14,12 @@ export default function Home() {
         <div className="flex flex-col gap-4 pt-4">
           <p className="text-[13px] text-gray-400">Hey there,</p>
           <h1 className="text-[46px] leading-[1.08] font-semibold tracking-tight">
-            I'm Lucy Scott Brown.
+            I&rsquo;m Lucy Scott Brown.
           </h1>
           <p className="text-[16px] leading-[1.65] text-gray-500 max-w-[400px]">
-            I do Product and GTM strategy for B2B tech companies — working
-            across product, commercial, and the gap between the two.
+            I do product and GTM strategy for B2B tech companies. Most of my
+            work happens in the gap between the two, which is where things tend
+            to come unstuck.
           </p>
           <Link
             href="/projects"
@@ -45,7 +46,7 @@ export default function Home() {
         </div>
 
         {/* Headshot */}
-        <div className="relative w-[260px] h-[360px] overflow-hidden flex-shrink-0">
+        <div className="relative w-[260px] h-[360px] overflow-hidden flex-shrink-0 rounded-2xl border-[6px] border-[#185FA5]">
           <Image
             src="/headshot.jpg"
             alt="Lucy Scott Brown"
@@ -53,8 +54,6 @@ export default function Home() {
             className="object-cover object-top"
             priority
           />
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent" />
-          <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent" />
         </div>
       </section>
 
@@ -85,18 +84,25 @@ export default function Home() {
         </h2>
         <div className="flex flex-col gap-4">
           <p className="text-[15px] leading-[1.75] text-gray-600">
-            I'm a senior product leader with 8+ years building and scaling B2B
-            products — across crypto payments, blockchain analytics, IoT SaaS,
-            and AI startups. I work best where the product is strong but the
-            commercial story hasn't landed yet.
+            I&rsquo;m a senior product leader, 8+ years building and scaling B2B
+            products across crypto payments, blockchain analytics, IoT SaaS and
+            AI startups.
           </p>
           <p className="text-[15px] leading-[1.75] text-gray-600">
-            My work spans the full product lifecycle: market sizing and GTM
+            I work best where the product is strong but the commercial story
+            hasn&rsquo;t landed yet (which is more companies than you&rsquo;d think).
+          </p>
+          <p className="text-[15px] leading-[1.75] text-gray-600">
+            The work spans the full product lifecycle: market sizing and GTM
             strategy, roadmap and OKRs, engineering delivery, and the internal
-            change management that makes it all stick. I've led teams of up to
-            15 engineers, run international market research across four
-            continents, and built the kind of cross-functional working practices
-            that outlast any single project.
+            change management that makes it all stick. That last one is the
+            least glamorous bit and usually the one that decides whether any of
+            the rest of it works.
+          </p>
+          <p className="text-[15px] leading-[1.75] text-gray-600">
+            I&rsquo;ve led teams of up to 15 engineers, run market research across
+            four continents, and built cross-functional working practices that
+            outlast any single project.
           </p>
         </div>
       </section>
@@ -162,9 +168,6 @@ export default function Home() {
                   {featured.description}
                 </p>
               </div>
-              <span className="text-[52px] font-medium leading-none select-none flex-shrink-0" style={{ color: "#e5e5e5" }}>
-                01
-              </span>
             </div>
           </Link>
 
@@ -197,7 +200,8 @@ export default function Home() {
       {/* ── Contact ── */}
       <section className="border-t border-gray-200 py-12">
         <p className="text-[15px] text-gray-500 mb-3">
-          Available for product and GTM advisory work.
+          Open to product and GTM advisory work, and always happy to just talk
+          shop.
         </p>
         <div className="flex gap-4 text-[13px]">
           <a href="mailto:lucyscottbrown@gmail.com" className="text-[#185FA5] hover:underline">
