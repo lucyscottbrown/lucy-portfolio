@@ -1,0 +1,1140 @@
+<!doctype html>
+<title>Triage · Lucy Scott Brown</title>
+<meta charset="utf-8">
+<style>
+  :root{
+    --paper:#F1F4F4; --panel:#FBFCFC; --panel-2:#EDF1F1;
+    --ink:#0E1618; --ink-soft:#33474B; --muted:#5F7377; --line:#D3DCDC;
+    --accent:#0F5C63; --accent-bright:#14808A; --accent-ink:#0A3D42;
+    --accent-bg: #E3EFEF;
+    --ochre:#A8641C; --ochre-bg:#F4E9D8;
+    --good:#2E7D5B; --good-bg:#E1F0E7;
+    --warn:#9C6B12; --warn-bg:#F4E9CE;
+    --crit:#AF432B; --crit-bg:#F5E0DA;
+    --shadow: 0 1px 2px rgba(14,22,24,.05), 0 8px 24px -12px rgba(14,22,24,.18);
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0C1213; --panel:#141D1F; --panel-2:#0F191A;
+      --ink:#EAF1F0; --ink-soft:#B6C6C6; --muted:#829595; --line:#243435;
+      --accent:#2FA0AA; --accent-bright:#43BCC6; --accent-ink:#B7E7EB;
+      --accent-bg: #102426;
+      --ochre:#D6944A; --ochre-bg:#2A2013;
+      --good:#5FBF8E; --good-bg:#15271F;
+      --warn:#D6A93F; --warn-bg:#2A2213;
+      --crit:#E0806A; --crit-bg:#2C1712;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0C1213; --panel:#141D1F; --panel-2:#0F191A;
+    --ink:#EAF1F0; --ink-soft:#B6C6C6; --muted:#829595; --line:#243435;
+    --accent:#2FA0AA; --accent-bright:#43BCC6; --accent-ink:#B7E7EB;
+    --accent-bg: #102426;
+    --ochre:#D6944A; --ochre-bg:#2A2013;
+    --good:#5FBF8E; --good-bg:#15271F;
+    --warn:#D6A93F; --warn-bg:#2A2213;
+    --crit:#E0806A; --crit-bg:#2C1712;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
+  }
+  :root[data-theme="light"]{
+    --paper:#F1F4F4; --panel:#FBFCFC; --panel-2:#EDF1F1;
+    --ink:#0E1618; --ink-soft:#33474B; --muted:#5F7377; --line:#D3DCDC;
+    --accent:#0F5C63; --accent-bright:#14808A; --accent-ink:#0A3D42;
+    --accent-bg: #E3EFEF;
+    --ochre:#A8641C; --ochre-bg:#F4E9D8;
+    --good:#2E7D5B; --good-bg:#E1F0E7;
+    --warn:#9C6B12; --warn-bg:#F4E9CE;
+    --crit:#AF432B; --crit-bg:#F5E0DA;
+    --shadow: 0 1px 2px rgba(14,22,24,.05), 0 8px 24px -12px rgba(14,22,24,.18);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 500px at 15% -10%, var(--accent-bg), transparent),
+      var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    padding:40px 20px 80px;
+  }
+  .wrap{max-width:1120px;margin:0 auto;}
+  ::selection{background:var(--accent);color:var(--panel);}
+  a{color:var(--accent);}
+  button, input, select{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--accent-bright);outline-offset:2px;}
+
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--muted);display:inline-block;}
+
+  h1.title{
+    font-family:var(--serif); font-weight:600; font-size:46px;
+    letter-spacing:-.4px; margin:0 0 6px; text-wrap:balance;
+    display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+  }
+  h1.title .tagline{
+    font-family:var(--sans); font-weight:500; font-size:17px;
+    color:var(--muted); letter-spacing:0;
+  }
+  p.lede{
+    font-size:16.5px; line-height:1.55; color:var(--ink-soft);
+    max-width:66ch; margin:0 0 26px;
+  }
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:34px;}
+  .chips .chips-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); margin-right:4px;
+  }
+  .chip{
+    font-family:var(--sans); font-size:13px; padding:6px 13px;
+    border-radius:999px; border:1px solid var(--line); background:var(--panel);
+    color:var(--ink-soft); cursor:pointer; transition:background .12s,color .12s,border-color .12s;
+  }
+  .chip:hover{border-color:var(--accent);}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;}
+  @media (max-width:860px){.grid2{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .card-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    padding:16px 20px; border-bottom:1px solid var(--line); background:var(--panel-2);
+  }
+  .card-head h2{font-family:var(--serif); font-weight:600; font-size:19px; margin:0;}
+  .card-head .tag{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .card-body{padding:20px;}
+  .stack{display:flex; flex-direction:column; gap:16px;}
+
+  label.field-label{
+    font-size:12.5px; font-weight:600; color:var(--ink-soft); display:block; margin-bottom:6px;
+  }
+  select.field{
+    width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink); font-size:14.5px;
+  }
+
+  /* car diagram */
+  .car-wrap{position:relative;}
+  svg.car{width:100%; height:auto; display:block; touch-action:manipulation;}
+  .zone{
+    stroke-width:2; cursor:pointer; transition:fill .15s, stroke .15s;
+  }
+  .zone:hover, .zone:focus-visible{ filter:brightness(1.06); }
+  @keyframes zoneFlash{ 0%{ filter:brightness(1.5); } 100%{ filter:brightness(1); } }
+  .zone.flash{ animation:zoneFlash .3s ease-out; }
+  .zone-label{
+    font-family:var(--mono); font-size:9px; letter-spacing:.03em;
+    fill:var(--ink-soft); pointer-events:none; text-anchor:middle;
+  }
+  .zone-label-sev{
+    font-family:var(--mono); font-weight:700; font-size:8.5px;
+    pointer-events:none; text-anchor:middle;
+  }
+  .car-static{fill:var(--panel-2); stroke:var(--line); stroke-width:1.5;}
+  .car-endcap{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.12em;
+    fill:var(--muted); text-anchor:middle;
+  }
+  .zone-label-sev{ fill:var(--ink-soft); }
+  .zone-dot{ stroke-width:2; transition:fill .15s, stroke .15s, opacity .15s; }
+
+  .legend-row{
+    display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; margin-bottom:2px;
+  }
+  .legend-item{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+  }
+  .legend-dot{width:8px; height:8px; border-radius:50%; flex:none; border:1.5px solid;}
+
+  .zone-info{
+    font-family:var(--sans); font-size:14px; color:var(--ink-soft);
+    min-height:22px; margin-top:12px; padding:9px 12px; border-radius:8px;
+    background:var(--panel-2); border:1px solid var(--line);
+    transition:background .12s, border-color .12s;
+  }
+  .zone-info b{color:var(--ink); font-weight:700;}
+  .zone-info.has-damage{border-color:var(--accent);}
+
+  .damage-summary{
+    margin-top:10px; font-size:12.5px; color:var(--ink-soft); line-height:1.7;
+  }
+  .damage-summary .ds-label{
+    font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); margin-right:6px;
+  }
+  .damage-summary .ds-chip{
+    display:inline-flex; align-items:center; gap:5px; margin:3px 8px 3px 0;
+    padding:3px 9px 3px 6px; border-radius:99px; background:var(--panel-2); border:1px solid var(--line);
+    font-size:12px;
+  }
+  .damage-summary .ds-dot{width:7px; height:7px; border-radius:50%; flex:none;}
+
+  .vehicle-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .vehicle-row > div{flex:1; min-width:150px;}
+
+  .hint{
+    font-size:12.5px; color:var(--muted); line-height:1.5; margin-top:2px;
+  }
+
+  /* tier badge */
+  .tier-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:11.5px; font-weight:700;
+    letter-spacing:.06em; text-transform:uppercase;
+    padding:7px 13px; border-radius:8px; margin-bottom:14px;
+  }
+  .tier-auto{background:var(--good-bg); color:var(--good);}
+  .tier-assisted{background:var(--ochre-bg); color:var(--ochre);}
+  .tier-escalate{background:var(--crit-bg); color:var(--crit);}
+  .tier-total_loss{background:var(--accent-bg); color:var(--accent);}
+  .tier-none{background:var(--panel-2); color:var(--muted);}
+  .tier-reason{font-size:14px; line-height:1.5; color:var(--ink-soft); margin:0 0 20px;}
+
+  .hero-row{display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; margin-bottom:20px;}
+  .hero-num{font-family:var(--serif); font-weight:600; font-size:44px; color:var(--accent); font-variant-numeric:tabular-nums; line-height:1;}
+  .hero-cap{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:4px;}
+  .hero-range{font-family:var(--mono); font-size:12.5px; color:var(--muted); margin-top:2px; font-variant-numeric:tabular-nums;}
+
+  .meter-block{flex:1; min-width:180px;}
+  .meter-top{display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+  .meter-track{height:8px; border-radius:99px; background:var(--panel-2); border:1px solid var(--line); overflow:hidden;}
+  .meter-fill{height:100%; border-radius:99px; transition:width .2s;}
+
+  table.lines{width:100%; border-collapse:collapse; font-size:13.5px;}
+  table.lines th{
+    text-align:left; font-family:var(--mono); font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--muted); font-weight:600; padding:0 8px 8px 0; border-bottom:1px solid var(--line);
+  }
+  table.lines td{padding:9px 8px 9px 0; border-bottom:1px solid var(--line); vertical-align:middle;}
+  table.lines tr:last-child td{border-bottom:none;}
+  table.lines td.num{font-variant-numeric:tabular-nums; text-align:right;}
+  .table-scroll{overflow-x:auto;}
+
+  .sev-pill{
+    display:inline-block; font-family:var(--mono); font-size:10.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:.04em; padding:3px 8px; border-radius:6px;
+  }
+  .sev-minor{background:var(--accent-bg); color:var(--accent);}
+  .sev-moderate{background:var(--warn-bg); color:var(--warn);}
+  .sev-severe{background:var(--crit-bg); color:var(--crit);}
+
+  .conf-inline{display:inline-flex; align-items:center; gap:6px; font-variant-numeric:tabular-nums;}
+  .conf-dot{width:7px;height:7px;border-radius:50%;flex:none;}
+
+  /* thresholds */
+  .thresh-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(205px,1fr)); gap:22px;}
+  .thresh-item .thresh-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
+  .thresh-item .thresh-name{font-size:13px; font-weight:600; color:var(--ink-soft);}
+  .thresh-item .thresh-val{font-family:var(--mono); font-size:14px; color:var(--accent); font-variant-numeric:tabular-nums; font-weight:700;}
+  input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:4px;
+    border-radius:99px; background:var(--line); outline-offset:6px;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:17px; height:17px; border-radius:50%;
+    background:var(--accent); border:3px solid var(--panel); box-shadow:0 0 0 1px var(--accent); cursor:pointer;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:11px; height:11px; border-radius:50%; background:var(--accent); border:3px solid var(--panel);
+    box-shadow:0 0 0 1px var(--accent); cursor:pointer;
+  }
+  .anomaly-row{
+    display:flex; align-items:flex-start; gap:12px; margin-top:22px; padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+  .switch{
+    position:relative; width:40px; height:23px; flex:none; margin-top:2px;
+  }
+  .switch input{position:absolute; inset:0; opacity:0; cursor:pointer; margin:0;}
+  .switch .track{
+    position:absolute; inset:0; background:var(--line); border-radius:99px; transition:background .15s;
+  }
+  .switch .knob{
+    position:absolute; top:2.5px; left:2.5px; width:18px; height:18px; border-radius:50%;
+    background:var(--panel); box-shadow:var(--shadow); transition:left .15s;
+  }
+  .switch input:checked + .track{background:var(--crit);}
+  .switch input:checked + .track + .knob{left:19.5px;}
+  .anomaly-copy .anomaly-title{font-size:13.5px; font-weight:600; margin-bottom:3px;}
+  .anomaly-copy .anomaly-sub{font-size:12.5px; color:var(--muted); line-height:1.5;}
+
+  .thresh-note{
+    margin-top:20px; padding-top:16px; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--muted); line-height:1.55;
+  }
+
+  /* review panel */
+  .review-row{
+    display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .review-row:last-of-type{border-bottom:none;}
+  .review-zone{flex:1; min-width:160px;}
+  .review-zone .rz-name{font-size:13.5px; font-weight:600;}
+  .review-zone .rz-damage{font-size:12px; color:var(--muted);}
+  .review-ai{font-family:var(--mono); font-size:13px; color:var(--muted); min-width:90px; text-align:right; font-variant-numeric:tabular-nums;}
+  .review-override{display:flex; align-items:center; gap:8px;}
+  .review-override input[type="number"]{
+    width:88px; padding:6px 8px; border-radius:7px; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink); font-family:var(--mono); font-size:13px; font-variant-numeric:tabular-nums;
+  }
+  .btn{
+    font-family:var(--sans); font-size:12.5px; font-weight:600; padding:6px 12px;
+    border-radius:7px; border:1px solid var(--line); background:var(--panel); color:var(--ink-soft);
+    cursor:pointer; transition:all .12s;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent);}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn.small{font-size:11.5px; padding:4px 9px;}
+  .review-totals{
+    display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:16px;
+    border-top:1px solid var(--line); flex-wrap:wrap; gap:14px;
+  }
+  .review-totals .rt-item{font-size:13px;}
+  .review-totals .rt-item .rt-label{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-family:var(--mono);}
+  .review-totals .rt-item .rt-num{font-family:var(--serif); font-weight:600; font-size:22px; font-variant-numeric:tabular-nums;}
+  .authorize-btn{
+    font-family:var(--sans); font-weight:600; font-size:14px; padding:11px 20px; border-radius:9px;
+    background:var(--accent); color:#fff; border:none; cursor:pointer; transition:background .12s;
+  }
+  .authorize-btn:hover{background:var(--accent-bright);}
+  .authorize-btn:disabled{background:var(--muted); cursor:default; opacity:.5;}
+  .auth-banner{
+    margin-top:14px; padding:11px 14px; border-radius:9px; background:var(--good-bg); color:var(--good);
+    font-size:13.5px; font-weight:600; display:none;
+  }
+  .auth-banner.show{display:block;}
+  .auth-banner.reopened{background:var(--warn-bg); color:var(--warn);}
+
+  .dispute-block{display:none; margin-top:12px;}
+  .dispute-block.show{display:block;}
+  .dispute-form{display:none; margin-top:10px; padding:12px 14px; border:1px solid var(--line);
+    border-radius:9px; background:var(--panel-2);}
+  .dispute-form.show{display:block;}
+  .dispute-row{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-top:7px;}
+  .dispute-row input[type="number"]{
+    width:110px; padding:7px 9px; border-radius:7px; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink); font-family:var(--mono); font-size:13px;
+    font-variant-numeric:tabular-nums;
+  }
+  .dispute-capture{
+    display:none; margin-top:11px; padding:11px 14px; border-radius:9px;
+    background:var(--panel-2); border:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-soft); line-height:1.6;
+  }
+  .dispute-capture.show{display:block;}
+  .dispute-capture b{color:var(--ink);}
+  .dispute-capture .dc-label{
+    font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); display:block; margin-bottom:5px;
+  }
+
+  footer{margin-top:36px;}
+  .footnote{
+    font-size:12.5px; color:var(--muted); line-height:1.6; max-width:74ch; margin:0 0 16px;
+  }
+  .foot-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+  .copy-btn{
+    font-family:var(--mono); font-size:12px; letter-spacing:.03em; padding:9px 15px; border-radius:8px;
+    border:1px solid var(--line); background:var(--panel); color:var(--ink-soft); cursor:pointer;
+  }
+  .copy-btn:hover{border-color:var(--accent); color:var(--accent);}
+  .copy-confirm{font-family:var(--mono); font-size:12px; color:var(--good); opacity:0; transition:opacity .2s;}
+  .copy-confirm.show{opacity:1;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="eyebrow">CAR INSURANCE CLAIMS &middot; WORKING PROTOTYPE</div>
+  <h1 class="title">Triage <span class="tagline">— an adjuster's copilot for damage claims</span></h1>
+  <p class="lede">
+    Reads the damage, drafts the estimate, and states exactly how sure it is — clearing the
+    claims it should clear on its own, and handing everything else to a human adjuster with the
+    evidence already attached. Not a chatbot, not an autopilot: a risk-scaled decision made explicit,
+    with the dials exposed rather than buried in code.
+  </p>
+
+  <div class="chips" id="presetChips">
+    <span class="chips-label">LOAD A CLAIM</span>
+  </div>
+
+  <div class="card" style="margin-bottom:22px;">
+    <div class="card-head">
+      <h2>Thresholds</h2>
+      <span class="tag">TRY IT — ADAPT ON THE FLY</span>
+    </div>
+    <div class="card-body">
+      <div class="thresh-grid">
+        <div class="thresh-item">
+          <div class="thresh-top"><span class="thresh-name">Auto-approve ceiling</span><span class="thresh-val" id="ceilingVal">$750</span></div>
+          <input type="range" id="ceilingSlider" min="100" max="3000" step="50" value="750">
+          <p class="hint">Estimates at or below this, with confidence cleared, need no human touch.</p>
+        </div>
+        <div class="thresh-item">
+          <div class="thresh-top"><span class="thresh-name">Confidence to auto-approve</span><span class="thresh-val" id="autoConfVal">90%</span></div>
+          <input type="range" id="autoConfSlider" min="50" max="99" step="1" value="90">
+          <p class="hint">Below this, even a cheap claim goes to a human first.</p>
+        </div>
+        <div class="thresh-item">
+          <div class="thresh-top"><span class="thresh-name">Confidence floor to escalate</span><span class="thresh-val" id="escFloorVal">65%</span></div>
+          <input type="range" id="escFloorSlider" min="30" max="80" step="1" value="65">
+          <p class="hint">Below this, don't trust the estimate at all — send straight to a specialist.</p>
+        </div>
+        <div class="thresh-item">
+          <div class="thresh-top"><span class="thresh-name">Total-loss line</span><span class="thresh-val" id="totalLossVal">70%</span></div>
+          <input type="range" id="totalLossSlider" min="40" max="95" step="5" value="70">
+          <p class="hint">Repair estimate above this share of vehicle value → write-off review, never an automatic repair.</p>
+        </div>
+      </div>
+      <p class="thresh-note">
+        These four numbers are illustrative starting points, not validated production values — the point of
+        exposing them as dials instead of burying them in code is to force this conversation with the insurer
+        explicitly, before launch, rather than discover the right thresholds by incident. They apply globally —
+        try moving one, then switch claims above. The escalate floor is kept at least 5 points below the
+        auto-approve bar on purpose — let them cross and auto-approve goes quietly unreachable with no warning.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head">
+        <h2>Claim</h2>
+        <span class="tag">THE INTAKE</span>
+      </div>
+      <div class="card-body stack">
+        <div class="vehicle-row">
+          <div>
+            <label class="field-label" for="vehicleClass">Vehicle class</label>
+            <select class="field" id="vehicleClass">
+              <option value="economy">Economy</option>
+              <option value="midsize" selected>Mid-size</option>
+              <option value="luxury">Luxury / SUV</option>
+            </select>
+            <p class="hint" id="vehicleValueHint"></p>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Damage — click a panel to cycle none → minor → moderate → severe</label>
+          <div class="car-wrap">
+            <svg class="car" viewBox="0 0 566 240" aria-label="Top-down car diagram with clickable damage zones">
+              <rect class="car-static" x="185" y="89" width="196" height="62" rx="6"></rect>
+              <text class="car-endcap" x="21" y="228">FRONT</text>
+              <text class="car-endcap" x="547" y="228">REAR</text>
+              <line x1="0" y1="120" x2="566" y2="120" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"></line>
+
+              <g data-zone="front_bumper" tabindex="0" role="button">
+                <rect class="zone" x="8" y="70" width="26" height="100" rx="8"></rect>
+                <text class="zone-label" x="21" y="130" transform="rotate(-90 21 130)">BUMPER</text>
+                <circle class="zone-dot" data-dot cx="21" cy="80" r="5"></circle>
+              </g>
+              <g data-zone="hood" tabindex="0" role="button">
+                <rect class="zone" x="40" y="45" width="95" height="150" rx="12"></rect>
+                <text class="zone-label" x="87" y="115">HOOD</text>
+                <text class="zone-label-sev" data-sev x="87" y="132"></text>
+              </g>
+              <g data-zone="windshield" tabindex="0" role="button">
+                <rect class="zone" x="141" y="45" width="40" height="150" rx="6"></rect>
+                <text class="zone-label" x="161" y="130" transform="rotate(-90 161 130)">GLASS</text>
+                <circle class="zone-dot" data-dot cx="161" cy="55" r="5"></circle>
+              </g>
+              <g data-zone="left_front_door" tabindex="0" role="button">
+                <rect class="zone" x="185" y="45" width="94" height="44" rx="4"></rect>
+                <text class="zone-label" x="232" y="63">L FRONT DR</text>
+                <text class="zone-label-sev" data-sev x="232" y="79"></text>
+              </g>
+              <g data-zone="left_rear_door" tabindex="0" role="button">
+                <rect class="zone" x="287" y="45" width="94" height="44" rx="4"></rect>
+                <text class="zone-label" x="334" y="63">L REAR DR</text>
+                <text class="zone-label-sev" data-sev x="334" y="79"></text>
+              </g>
+              <g data-zone="right_front_door" tabindex="0" role="button">
+                <rect class="zone" x="185" y="151" width="94" height="44" rx="4"></rect>
+                <text class="zone-label" x="232" y="169">R FRONT DR</text>
+                <text class="zone-label-sev" data-sev x="232" y="185"></text>
+              </g>
+              <g data-zone="right_rear_door" tabindex="0" role="button">
+                <rect class="zone" x="287" y="151" width="94" height="44" rx="4"></rect>
+                <text class="zone-label" x="334" y="169">R REAR DR</text>
+                <text class="zone-label-sev" data-sev x="334" y="185"></text>
+              </g>
+              <g data-zone="trunk" tabindex="0" role="button">
+                <rect class="zone" x="431" y="45" width="95" height="150" rx="12"></rect>
+                <text class="zone-label" x="478" y="115">TRUNK</text>
+                <text class="zone-label-sev" data-sev x="478" y="132"></text>
+              </g>
+              <g data-zone="rear_bumper" tabindex="0" role="button">
+                <rect class="zone" x="532" y="70" width="26" height="100" rx="8"></rect>
+                <text class="zone-label" x="545" y="130" transform="rotate(-90 545 130)">BUMPER</text>
+                <circle class="zone-dot" data-dot cx="545" cy="80" r="5"></circle>
+              </g>
+            </svg>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-dot" style="background:var(--panel-2); border-color:var(--line);"></span>None</span>
+              <span class="legend-item"><span class="legend-dot" style="background:var(--accent-bg); border-color:var(--accent);"></span>Minor</span>
+              <span class="legend-item"><span class="legend-dot" style="background:var(--warn-bg); border-color:var(--warn);"></span>Moderate</span>
+              <span class="legend-item"><span class="legend-dot" style="background:var(--crit-bg); border-color:var(--crit);"></span>Severe</span>
+            </div>
+            <div class="zone-info" id="zoneInfo">Hover, focus, or click a panel to inspect and set its damage.</div>
+            <div class="damage-summary" id="damageSummary"></div>
+          </div>
+        </div>
+
+        <div class="anomaly-row">
+          <label class="switch">
+            <input type="checkbox" id="anomalyToggle">
+            <span class="track"></span>
+            <span class="knob"></span>
+          </label>
+          <div class="anomaly-copy">
+            <div class="anomaly-title">Anomaly signal flagged on this claim</div>
+            <div class="anomaly-sub">Simulates an upstream fraud check — inconsistent photo metadata, reused images,
+              vehicle mismatch. When on, it overrides every threshold above: no estimate is trusted until a person looks at it.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Assessment</h2>
+        <span class="tag">LIVE READOUT</span>
+      </div>
+      <div class="card-body">
+        <div id="tierBadge"></div>
+        <p class="tier-reason" id="tierReason"></p>
+
+        <div class="hero-row" id="heroRow" style="display:none;">
+          <div>
+            <div class="hero-num" id="heroTotal">$0</div>
+            <div class="hero-cap">Estimate</div>
+            <div class="hero-range" id="heroRange"></div>
+          </div>
+          <div class="meter-block">
+            <div class="meter-top"><span>Model confidence</span><span id="confPct">—</span></div>
+            <div class="meter-track"><div class="meter-fill" id="confFill" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="lines" id="linesTable" style="display:none;">
+            <thead>
+              <tr><th>Panel</th><th>Damage</th><th>Severity</th><th>Confidence</th><th class="num">Estimate</th></tr>
+            </thead>
+            <tbody id="linesBody"></tbody>
+          </table>
+        </div>
+        <p class="hint" id="noDamageHint">No damage recorded yet — click a panel on the car diagram, or load a claim above.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:22px;">
+    <div class="card-head">
+      <h2>Adjuster review</h2>
+      <span class="tag">HUMAN IN THE LOOP</span>
+    </div>
+    <div class="card-body">
+      <div id="reviewList"></div>
+      <p class="hint" id="reviewEmptyHint">Nothing to review yet.</p>
+      <div class="review-totals" id="reviewTotals" style="display:none;">
+        <div class="rt-item">
+          <div class="rt-label">AI estimate</div>
+          <div class="rt-num" id="rtAi">$0</div>
+        </div>
+        <div class="rt-item">
+          <div class="rt-label">Adjuster total</div>
+          <div class="rt-num" id="rtAdjuster">$0</div>
+        </div>
+        <div>
+          <button class="authorize-btn" id="authorizeBtn">Authorize repair</button>
+        </div>
+      </div>
+      <div class="auth-banner" id="authBanner">✓ Authorized — estimate locked in and marked ready for repair. (Repair-shop routing and negotiation happen downstream, outside what's built here.)</div>
+
+      <div class="dispute-block" id="disputeBlock">
+        <button class="btn small" id="disputeOpenBtn">Dispute this estimate — repair shop or policyholder</button>
+        <div class="dispute-form" id="disputeForm">
+          <label class="field-label" for="disputeAmount">What figure are they claiming it should be?</label>
+          <div class="dispute-row">
+            <input type="number" id="disputeAmount" step="5" placeholder="0">
+            <button class="btn small" id="disputeLogBtn">Reopen claim</button>
+          </div>
+        </div>
+        <div class="dispute-capture" id="disputeCapture"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footnote">
+      Deliberately not built: any real vision model, a live backend, or actual claims data — this is a decision
+      engine and a UX, not a computer-vision pipeline. In production, the panel-level damage tags would come from
+      a vision model call rather than a click; everything downstream of that click — the cost model, the
+      confidence weighting, the tiering, and the review UX — is the actual product decision, and it's the part
+      built here. The vision, the eval plan, and the reasoning behind every threshold live in the PRD.
+    </p>
+    <div class="foot-actions">
+      <button class="copy-btn" id="copyBtn">Copy claim summary</button>
+      <span class="copy-confirm" id="copyConfirm">Copied</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // structuralRisk:false = a bolt-on cosmetic cover (bumper), not load-bearing —
+  // severe damage there is bad but isn't, by itself, a frame/safety question.
+  // Everything else defaults to structuralRisk:true (doors/hood/trunk sit on or
+  // adjacent to the crash structure, so severe damage there plausibly is one).
+  var ZONE_META = {
+    front_bumper:{label:"Front bumper", base:300, structuralRisk:false},
+    hood:{label:"Hood", base:700},
+    windshield:{label:"Windshield", base:0, glass:true},
+    left_front_door:{label:"Left front door", base:550},
+    left_rear_door:{label:"Left rear door", base:600},
+    right_front_door:{label:"Right front door", base:550},
+    right_rear_door:{label:"Right rear door", base:600},
+    trunk:{label:"Trunk", base:500},
+    rear_bumper:{label:"Rear bumper", base:300, structuralRisk:false}
+  };
+  var SEVERITIES = ["none","minor","moderate","severe"];
+  var SEV_MULT = {minor:0.35, moderate:0.7, severe:1.4};
+  var SEV_CONF = {minor:0.95, moderate:0.85, severe:0.62};
+  var GLASS_MID = {minor:110, moderate:250, severe:515};
+  var GLASS_CONF = {minor:0.97, moderate:0.95, severe:0.93};
+  var CLASS_MULT = {economy:0.75, midsize:1.0, luxury:1.7};
+  // Assumed market value of the insured vehicle — what the total-loss line is a share of.
+  // Economy sits low on purpose: write-offs happen to old cheap cars, not new expensive ones,
+  // because it takes far less damage to cross the line.
+  var VEHICLE_VALUE = {economy:4500, midsize:16000, luxury:48000};
+  var DAMAGE_WORD = {
+    minor:{glass:"chip", panel:"scratch"},
+    moderate:{glass:"crack", panel:"dent"},
+    severe:{glass:"shattered", panel:"panel / structural damage"}
+  };
+  var DAMAGE_WORD_COSMETIC_SEVERE = "severe cosmetic damage";
+
+  var PRESETS = [
+    {id:"scuff", label:"Parking-lot scuff", vehicleClass:"economy", anomalyFlag:false,
+      zones:{front_bumper:"minor"}},
+    {id:"collision", label:"Multi-panel collision", vehicleClass:"midsize", anomalyFlag:false,
+      zones:{hood:"moderate", left_front_door:"moderate", front_bumper:"moderate"}},
+    {id:"windscreen", label:"Windscreen crack", vehicleClass:"economy", anomalyFlag:false,
+      zones:{windshield:"severe"}},
+    {id:"tbone", label:"T-bone, frame damage", vehicleClass:"luxury", anomalyFlag:false,
+      zones:{right_front_door:"severe", right_rear_door:"severe"}},
+    {id:"staged", label:"Suspected staged claim", vehicleClass:"midsize", anomalyFlag:true,
+      zones:{left_rear_door:"minor", trunk:"minor"}},
+    {id:"writeoff", label:"Older car, extensive damage", vehicleClass:"economy", anomalyFlag:false,
+      zones:{front_bumper:"severe", hood:"severe", windshield:"severe", left_front_door:"severe",
+        left_rear_door:"severe", trunk:"severe", rear_bumper:"severe"}}
+  ];
+
+  var state = {
+    zones:{}, vehicleClass:"midsize", anomalyFlag:false,
+    overrides:{}, authorized:false,
+    disputeOpen:false, disputeLogged:false, disputeAmount:null,
+    thresholds:{ceiling:750, autoConf:0.90, escFloor:0.65, totalLossPct:0.70}
+  };
+  Object.keys(ZONE_META).forEach(function(z){ state.zones[z]="none"; });
+
+  function $(id){ return document.getElementById(id); }
+  function money(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function pct(n){ return Math.round(n*100) + "%"; }
+
+  function computeLine(zoneId, severity, vehicleClass){
+    if(severity === "none") return null;
+    var meta = ZONE_META[zoneId];
+    var classMult = CLASS_MULT[vehicleClass];
+    var mid, conf, structural, damage;
+    if(meta.glass){
+      mid = GLASS_MID[severity] * classMult;
+      conf = GLASS_CONF[severity];
+      structural = false;
+      damage = DAMAGE_WORD[severity].glass;
+    } else {
+      mid = meta.base * SEV_MULT[severity] * classMult;
+      conf = SEV_CONF[severity];
+      structural = severity === "severe" && meta.structuralRisk !== false;
+      damage = (severity === "severe" && meta.structuralRisk === false)
+        ? DAMAGE_WORD_COSMETIC_SEVERE
+        : DAMAGE_WORD[severity].panel;
+    }
+    var low = Math.round(mid*0.82/5)*5;
+    var high = Math.round(mid*1.22/5)*5;
+    mid = Math.round(mid/5)*5;
+    return {zoneId:zoneId, label:meta.label, severity:severity, damage:damage,
+      low:low, mid:mid, high:high, confidence:conf, structural:structural};
+  }
+
+  function assess(){
+    var lines = [];
+    Object.keys(state.zones).forEach(function(z){
+      var l = computeLine(z, state.zones[z], state.vehicleClass);
+      if(l) lines.push(l);
+    });
+    if(lines.length === 0) return null;
+    var totalLow=0, totalMid=0, totalHigh=0, weightSum=0, confSum=0, structuralFlag=false;
+    lines.forEach(function(l){
+      totalLow += l.low; totalMid += l.mid; totalHigh += l.high;
+      confSum += l.mid * l.confidence; weightSum += l.mid;
+      if(l.structural) structuralFlag = true;
+    });
+    var confidence = weightSum > 0 ? confSum/weightSum : 0;
+    return {lines:lines, totalLow:totalLow, totalMid:totalMid, totalHigh:totalHigh,
+      confidence:confidence, structuralFlag:structuralFlag};
+  }
+
+  function decide(a){
+    var t = state.thresholds;
+    if(!a) return {tier:"none", reason:"No damage recorded for this claim yet."};
+    if(state.anomalyFlag) return {tier:"escalate",
+      reason:"Anomaly signal flagged — inconsistent metadata or possible image reuse. Routed to a senior adjuster; no estimate is trusted until a person looks at it, regardless of how the damage itself scores."};
+    // Total loss is checked before structural and before confidence: once repair cost approaches
+    // the value of the car, "how do we repair this" is the wrong question entirely.
+    var value = VEHICLE_VALUE[state.vehicleClass];
+    var tlLine = Math.round(t.totalLossPct * value);
+    if(a.totalMid >= tlLine) return {tier:"total_loss",
+      reason:"Estimated repair (" + money(a.totalMid) + ") is at or above " + Math.round(t.totalLossPct*100) +
+        "% of the vehicle's assumed value (" + money(value) + "), so the question is no longer how to repair it. " +
+        "Routed to write-off valuation — always a human decision. Triage sizes it; it doesn't settle it."};
+    if(a.structuralFlag) return {tier:"escalate",
+      reason:"Structural or safety-relevant damage detected. Frame and safety-system integrity can't be confirmed from photos alone — this needs a physical inspection before any number is authorized."};
+    if(a.confidence < t.escFloor) return {tier:"escalate",
+      reason:"Model confidence ("+pct(a.confidence)+") is below the floor for a trusted estimate ("+pct(t.escFloor)+"). Send to a human before any figure leaves this screen."};
+    if(a.totalMid <= t.ceiling && a.confidence >= t.autoConf) return {tier:"auto",
+      reason:"Low value (≤"+money(t.ceiling)+"), high confidence (≥"+pct(t.autoConf)+"), no structural or anomaly flags. This estimate clears on its own and goes straight to repair authorization."};
+    // The estimate is a range, not a point. If the top of that range crosses the total-loss
+    // line even though the midpoint doesn't, the adjuster should know before authorizing.
+    var borderline = a.totalHigh >= tlLine
+      ? " ⚠ The top of the estimate range (" + money(a.totalHigh) + ") crosses the total-loss line of " +
+        money(tlLine) + " — confirm valuation before authorizing."
+      : "";
+    return {tier:"assisted",
+      reason:"Doesn't clear the auto-approve bar and isn't flagged for escalation — an adjuster reviews the line items below before anything is authorized." + borderline};
+  }
+
+  function sevColor(sev){
+    if(sev==="minor") return "var(--accent)";
+    if(sev==="moderate") return "var(--warn)";
+    if(sev==="severe") return "var(--crit)";
+    return "var(--line)";
+  }
+  function sevFill(sev){
+    if(sev==="minor") return "var(--accent-bg)";
+    if(sev==="moderate") return "var(--warn-bg)";
+    if(sev==="severe") return "var(--crit-bg)";
+    return "var(--panel-2)";
+  }
+
+  function sevWord(sev){
+    if(sev==="minor") return "Minor";
+    if(sev==="moderate") return "Moderate";
+    if(sev==="severe") return "Severe";
+    return "";
+  }
+
+  function renderDiagram(){
+    Object.keys(ZONE_META).forEach(function(z){
+      var g = document.querySelector('[data-zone="'+z+'"]');
+      var rect = g.querySelector("rect.zone");
+      var sev = state.zones[z];
+      var color = sevColor(sev);
+      rect.style.fill = sevFill(sev);
+      rect.style.stroke = color;
+
+      var sevText = g.querySelector("[data-sev]");
+      if(sevText){
+        sevText.textContent = sevWord(sev).toUpperCase();
+        sevText.style.fill = color;
+      }
+      var dot = g.querySelector("[data-dot]");
+      if(dot){
+        if(sev === "none"){
+          dot.style.fill = "var(--panel)";
+          dot.style.stroke = "var(--line)";
+          dot.style.opacity = "0.7";
+        } else {
+          dot.style.fill = color;
+          dot.style.stroke = color;
+          dot.style.opacity = "1";
+        }
+      }
+    });
+    renderDamageSummary();
+  }
+
+  function renderDamageSummary(){
+    var el = $("damageSummary");
+    var damaged = Object.keys(state.zones).filter(function(z){ return state.zones[z] !== "none"; });
+    if(damaged.length === 0){
+      el.innerHTML = '<span class="ds-label">DAMAGE RECORDED</span>None yet — click any panel above.';
+      return;
+    }
+    var chips = damaged.map(function(z){
+      var sev = state.zones[z];
+      return '<span class="ds-chip"><span class="ds-dot" style="background:'+sevColor(sev)+'"></span>'+
+        ZONE_META[z].label + ' — ' + sevWord(sev) + '</span>';
+    }).join("");
+    el.innerHTML = '<span class="ds-label">DAMAGE RECORDED</span>' + chips;
+  }
+
+  function renderAssessment(){
+    var a = assess();
+    var d = decide(a);
+    var badge = $("tierBadge");
+    var cls = "tier-"+d.tier;
+    var labelMap = {auto:"Auto-approve", assisted:"Assisted review", escalate:"Escalate",
+      total_loss:"Total-loss review", none:"Awaiting damage"};
+    badge.innerHTML = '<span class="tier-badge '+cls+'">'+labelMap[d.tier]+'</span>';
+    $("tierReason").textContent = d.reason;
+
+    if(!a){
+      $("heroRow").style.display = "none";
+      $("linesTable").style.display = "none";
+      $("noDamageHint").style.display = "block";
+      renderReview(null);
+      return;
+    }
+    $("noDamageHint").style.display = "none";
+    $("heroRow").style.display = "flex";
+    $("linesTable").style.display = "table";
+
+    $("heroTotal").textContent = money(a.totalMid);
+    $("heroRange").textContent = "range " + money(a.totalLow) + " – " + money(a.totalHigh);
+    $("confPct").textContent = pct(a.confidence);
+    var fill = $("confFill");
+    fill.style.width = Math.round(a.confidence*100) + "%";
+    fill.style.background = a.confidence >= 0.85 ? "var(--good)" : (a.confidence >= 0.65 ? "var(--warn)" : "var(--crit)");
+
+    var body = $("linesBody");
+    body.innerHTML = "";
+    a.lines.forEach(function(l){
+      var tr = document.createElement("tr");
+      var confColor = l.confidence >= 0.85 ? "var(--good)" : (l.confidence >= 0.65 ? "var(--warn)" : "var(--crit)");
+      tr.innerHTML =
+        '<td>'+l.label+(l.structural?' <span class="hint" style="color:var(--crit)">structural</span>':'')+'</td>'+
+        '<td>'+l.damage+'</td>'+
+        '<td><span class="sev-pill sev-'+l.severity+'">'+l.severity+'</span></td>'+
+        '<td><span class="conf-inline"><span class="conf-dot" style="background:'+confColor+'"></span>'+pct(l.confidence)+'</span></td>'+
+        '<td class="num">'+money(l.mid)+'</td>';
+      body.appendChild(tr);
+    });
+
+    renderReview(a);
+  }
+
+  function renderReview(a){
+    var list = $("reviewList");
+    var emptyHint = $("reviewEmptyHint");
+    var totalsRow = $("reviewTotals");
+    if(!a){
+      list.innerHTML = "";
+      emptyHint.style.display = "block";
+      totalsRow.style.display = "none";
+      $("authBanner").classList.remove("show");
+      return;
+    }
+    emptyHint.style.display = "none";
+    totalsRow.style.display = "flex";
+    list.innerHTML = "";
+    var aiTotal = 0, adjusterTotal = 0;
+    a.lines.forEach(function(l){
+      aiTotal += l.mid;
+      var overridden = state.overrides.hasOwnProperty(l.zoneId);
+      var val = overridden ? state.overrides[l.zoneId] : l.mid;
+      adjusterTotal += val;
+
+      var row = document.createElement("div");
+      row.className = "review-row";
+      var overrideControl;
+      if(overridden){
+        overrideControl =
+          '<div class="review-override">'+
+            '<input type="number" step="5" value="'+val+'" data-override-zone="'+l.zoneId+'">'+
+            '<button class="btn small" data-reset-zone="'+l.zoneId+'">Reset to AI</button>'+
+          '</div>';
+      } else {
+        overrideControl = '<button class="btn small" data-override-btn="'+l.zoneId+'">Override</button>';
+      }
+      row.innerHTML =
+        '<div class="review-zone"><div class="rz-name">'+l.label+'</div>'+
+          '<div class="rz-damage">'+l.severity+' &middot; '+l.damage+' &middot; '+pct(l.confidence)+' confidence</div></div>'+
+        '<div class="review-ai">AI: '+money(l.mid)+'</div>'+
+        overrideControl;
+      list.appendChild(row);
+    });
+    $("rtAi").textContent = money(aiTotal);
+    $("rtAdjuster").textContent = money(adjusterTotal);
+
+    list.querySelectorAll("[data-override-btn]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var z = btn.getAttribute("data-override-btn");
+        var line = a.lines.filter(function(l){return l.zoneId===z;})[0];
+        state.overrides[z] = line.mid;
+        renderReview(a);
+      });
+    });
+    list.querySelectorAll("[data-reset-zone]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        delete state.overrides[btn.getAttribute("data-reset-zone")];
+        renderReview(a);
+      });
+    });
+    list.querySelectorAll("[data-override-zone]").forEach(function(inp){
+      inp.addEventListener("input", function(){
+        var z = inp.getAttribute("data-override-zone");
+        var v = parseFloat(inp.value);
+        if(!isNaN(v)) { state.overrides[z] = v; renderReview(a); }
+      });
+    });
+
+    $("authorizeBtn").onclick = function(){
+      state.authorized = true;
+      state.authorizedTotal = adjusterTotal;
+      state.authorizedTier = decide(a).tier;
+      $("authBanner").classList.add("show");
+      $("disputeBlock").classList.add("show");
+    };
+  }
+
+  function renderThresholds(){
+    $("ceilingVal").textContent = money(state.thresholds.ceiling);
+    $("autoConfVal").textContent = Math.round(state.thresholds.autoConf*100) + "%";
+    $("escFloorVal").textContent = Math.round(state.thresholds.escFloor*100) + "%";
+    $("totalLossVal").textContent = Math.round(state.thresholds.totalLossPct*100) + "%";
+    var value = VEHICLE_VALUE[state.vehicleClass];
+    $("vehicleValueHint").textContent = "Assumed market value " + money(value) +
+      " · total-loss line at " + money(Math.round(state.thresholds.totalLossPct * value));
+  }
+
+  state.hoverZone = null;
+
+  function renderAll(){
+    renderDiagram();
+    renderThresholds();
+    renderAssessment();
+    renderZoneInfo();
+    resetAuthState();
+  }
+
+  // Any change to the claim or the thresholds invalidates an authorization and
+  // anything downstream of it — don't leave a stale "authorized" banner on screen.
+  function resetAuthState(){
+    state.authorized = false;
+    state.disputeOpen = false;
+    state.disputeLogged = false;
+    state.disputeAmount = null;
+    var banner = $("authBanner");
+    banner.classList.remove("show");
+    banner.classList.remove("reopened");
+    banner.textContent = "✓ Authorized — estimate locked in and marked ready for repair. " +
+      "(Repair-shop routing and negotiation happen downstream, outside what's built here.)";
+    $("disputeBlock").classList.remove("show");
+    $("disputeForm").classList.remove("show");
+    $("disputeCapture").classList.remove("show");
+    $("disputeAmount").value = "";
+  }
+
+  function renderZoneInfo(){
+    var el = $("zoneInfo");
+    var z = state.hoverZone;
+    if(!z){
+      el.classList.remove("has-damage");
+      el.innerHTML = "Hover, focus, or click a panel to inspect and set its damage.";
+      return;
+    }
+    var sev = state.zones[z];
+    if(sev === "none"){
+      el.classList.remove("has-damage");
+      el.innerHTML = "<b>" + ZONE_META[z].label + "</b> — no damage. Click to set minor.";
+      return;
+    }
+    el.classList.add("has-damage");
+    var line = computeLine(z, sev, state.vehicleClass);
+    el.innerHTML = "<b>" + ZONE_META[z].label + "</b> — " + sevWord(sev) + " (" + line.damage + "), " +
+      pct(line.confidence) + " confidence, " + money(line.mid) +
+      (line.structural ? " · <b style=\"color:var(--crit)\">structural</b>" : "") + ". Click to cycle.";
+  }
+
+  function cycleZone(z){
+    var i = SEVERITIES.indexOf(state.zones[z]);
+    state.zones[z] = SEVERITIES[(i+1) % SEVERITIES.length];
+    delete state.overrides[z];
+    state.hoverZone = z;
+    renderAll();
+    var rect = document.querySelector('[data-zone="'+z+'"] rect.zone');
+    rect.classList.remove("flash");
+    void rect.offsetWidth;
+    rect.classList.add("flash");
+  }
+
+  Object.keys(ZONE_META).forEach(function(z){
+    var g = document.querySelector('[data-zone="'+z+'"]');
+    g.addEventListener("click", function(){ cycleZone(z); });
+    g.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); cycleZone(z); }
+    });
+    g.addEventListener("mouseenter", function(){ state.hoverZone = z; renderZoneInfo(); });
+    g.addEventListener("focus", function(){ state.hoverZone = z; renderZoneInfo(); });
+    g.addEventListener("mouseleave", function(){ if(state.hoverZone === z){ state.hoverZone = null; renderZoneInfo(); } });
+  });
+
+  var chipsWrap = $("presetChips");
+  PRESETS.forEach(function(p){
+    var chip = document.createElement("button");
+    chip.className = "chip";
+    chip.textContent = p.label;
+    chip.addEventListener("click", function(){
+      Object.keys(ZONE_META).forEach(function(z){ state.zones[z] = "none"; });
+      Object.keys(p.zones).forEach(function(z){ state.zones[z] = p.zones[z]; });
+      state.vehicleClass = p.vehicleClass;
+      state.anomalyFlag = p.anomalyFlag;
+      state.overrides = {};
+      $("vehicleClass").value = p.vehicleClass;
+      $("anomalyToggle").checked = p.anomalyFlag;
+      chipsWrap.querySelectorAll(".chip").forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      renderAll();
+    });
+    chipsWrap.appendChild(chip);
+  });
+
+  $("vehicleClass").addEventListener("change", function(e){
+    state.vehicleClass = e.target.value; renderAll();
+  });
+
+  $("disputeOpenBtn").addEventListener("click", function(){
+    state.disputeOpen = true;
+    $("disputeForm").classList.add("show");
+    $("disputeAmount").focus();
+  });
+
+  $("disputeLogBtn").addEventListener("click", function(){
+    var claimed = parseFloat($("disputeAmount").value);
+    if(isNaN(claimed) || claimed <= 0) return;
+    state.disputeLogged = true;
+    state.disputeAmount = claimed;
+
+    var authorized = state.authorizedTotal || 0;
+    var delta = claimed - authorized;
+    var pctOff = authorized > 0 ? Math.abs(delta) / authorized : 0;
+    var direction = delta > 0 ? "above" : "below";
+
+    // Reopening matters more than the number: a system that can decide without a
+    // human has to have a route back to one.
+    var banner = $("authBanner");
+    banner.classList.add("reopened");
+    banner.textContent = "↺ Reopened — authorization withdrawn and the claim is back in assisted review, " +
+      "with the disputed figure attached for the adjuster.";
+
+    $("disputeForm").classList.remove("show");
+
+    var wasAuto = state.authorizedTier === "auto";
+    $("disputeCapture").innerHTML =
+      '<span class="dc-label">CAPTURED FOR THE FEEDBACK LOOP</span>' +
+      'Authorized <b>' + money(authorized) + '</b> · disputed at <b>' + money(claimed) + '</b> — ' +
+      money(Math.abs(delta)) + ' ' + direction + ', <b>' + Math.round(pctOff*100) + '%</b> off.<br>' +
+      'Logged against the estimate-accuracy eval set, broken out by the panels on this claim' +
+      (wasAuto
+        ? ', <b>and flagged as a false-approve candidate</b> — it cleared with no human touch, so it is exactly the case the auto-approve audit exists to catch.'
+        : '. It cleared assisted review, so it also counts against adjuster override quality, not just the model.');
+    $("disputeCapture").classList.add("show");
+  });
+  $("anomalyToggle").addEventListener("change", function(e){
+    state.anomalyFlag = e.target.checked; renderAll();
+  });
+  $("ceilingSlider").addEventListener("input", function(e){
+    state.thresholds.ceiling = parseFloat(e.target.value); renderAll();
+  });
+  // Kept at least MIN_GAP apart on purpose: if the escalate floor ever reaches or
+  // passes the auto-approve bar, the escalate check (which runs first in decide())
+  // would fire before auto-approve ever gets evaluated — auto-approve goes quietly
+  // unreachable with no error, which is exactly the kind of thing that shows up as
+  // a support ticket, not a code review comment.
+  var MIN_GAP = 0.05;
+  $("autoConfSlider").addEventListener("input", function(e){
+    var v = parseFloat(e.target.value)/100;
+    if(v < state.thresholds.escFloor + MIN_GAP){
+      v = Math.min(0.99, state.thresholds.escFloor + MIN_GAP);
+      e.target.value = Math.round(v*100);
+    }
+    state.thresholds.autoConf = v; renderAll();
+  });
+  $("escFloorSlider").addEventListener("input", function(e){
+    var v = parseFloat(e.target.value)/100;
+    if(v > state.thresholds.autoConf - MIN_GAP){
+      v = Math.max(0.30, state.thresholds.autoConf - MIN_GAP);
+      e.target.value = Math.round(v*100);
+    }
+    state.thresholds.escFloor = v; renderAll();
+  });
+  $("totalLossSlider").addEventListener("input", function(e){
+    state.thresholds.totalLossPct = parseFloat(e.target.value)/100; renderAll();
+  });
+
+  $("copyBtn").addEventListener("click", function(){
+    var a = assess();
+    var d = decide(a);
+    var lines = ["TRIAGE — CLAIM SUMMARY", ""];
+    lines.push("Vehicle class: " + state.vehicleClass +
+      " (assumed value " + money(VEHICLE_VALUE[state.vehicleClass]) +
+      ", total-loss line " + money(Math.round(state.thresholds.totalLossPct * VEHICLE_VALUE[state.vehicleClass])) + ")");
+    lines.push("Decision: " + d.tier.toUpperCase().replace("_"," "));
+    lines.push("Reason: " + d.reason);
+    if(a){
+      lines.push("");
+      lines.push("Estimate: " + money(a.totalMid) + " (range " + money(a.totalLow) + "-" + money(a.totalHigh) + ")");
+      lines.push("Confidence: " + pct(a.confidence));
+      lines.push("");
+      lines.push("Line items:");
+      a.lines.forEach(function(l){
+        lines.push("- " + l.label + ": " + l.severity + " (" + l.damage + "), " + pct(l.confidence) + " confidence, " + money(l.mid));
+      });
+    }
+    if(state.disputeLogged){
+      lines.push("");
+      lines.push("DISPUTED — authorized " + money(state.authorizedTotal) +
+        ", claimed " + money(state.disputeAmount) + ". Claim reopened; delta logged to the eval set.");
+    }
+    var text = lines.join("\n");
+    function confirm(){
+      var c = $("copyConfirm");
+      c.classList.add("show");
+      setTimeout(function(){ c.classList.remove("show"); }, 1600);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(confirm).catch(function(){});
+    }
+  });
+
+  // load first preset by default
+  chipsWrap.querySelector(".chip").click();
+})();
+</script>
