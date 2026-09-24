@@ -368,12 +368,12 @@
 <div class="wrap">
 
   <div class="eyebrow">CAR INSURANCE CLAIMS &middot; WORKING PROTOTYPE</div>
-  <h1 class="title">Triage <span class="tagline">— an adjuster's copilot for damage claims</span></h1>
+  <h1 class="title">Triage <span class="tagline">- an adjuster's copilot for damage claims</span></h1>
   <p class="lede">
-    Reads the damage, drafts the estimate, and states exactly how sure it is — clearing the
-    claims it should clear on its own, and handing everything else to a human adjuster with the
-    evidence already attached. Not a chatbot, not an autopilot: a risk-scaled decision made explicit,
-    with the dials exposed rather than buried in code.
+    Triage reads the submitted damage photos, drafts an itemised estimate, and scores its own
+    confidence on each line. Cheap, unambiguous claims clear without a person. Everything else goes
+    to an adjuster with the reasoning attached. The thresholds that decide which is which are
+    exposed as settings on this page.
   </p>
 
   <div class="chips" id="presetChips">
@@ -383,12 +383,12 @@
   <div class="card" style="margin-bottom:22px;">
     <div class="card-head">
       <h2>Thresholds</h2>
-      <span class="tag">TRY IT — ADAPT ON THE FLY</span>
+      <span class="tag">APPLIES TO EVERY CLAIM</span>
     </div>
     <div class="card-body">
       <div class="thresh-grid">
         <div class="thresh-item">
-          <div class="thresh-top"><span class="thresh-name">Auto-approve ceiling</span><span class="thresh-val" id="ceilingVal">$750</span></div>
+          <div class="thresh-top"><span class="thresh-name">Auto-approve ceiling</span><span class="thresh-val" id="ceilingVal">£750</span></div>
           <input type="range" id="ceilingSlider" min="100" max="3000" step="50" value="750">
           <p class="hint">Estimates at or below this, with confidence cleared, need no human touch.</p>
         </div>
@@ -400,20 +400,20 @@
         <div class="thresh-item">
           <div class="thresh-top"><span class="thresh-name">Confidence floor to escalate</span><span class="thresh-val" id="escFloorVal">65%</span></div>
           <input type="range" id="escFloorSlider" min="30" max="80" step="1" value="65">
-          <p class="hint">Below this, don't trust the estimate at all — send straight to a specialist.</p>
+          <p class="hint">Below this the estimate is not used at all, and the claim goes straight to a specialist.</p>
         </div>
         <div class="thresh-item">
           <div class="thresh-top"><span class="thresh-name">Total-loss line</span><span class="thresh-val" id="totalLossVal">70%</span></div>
           <input type="range" id="totalLossSlider" min="40" max="95" step="5" value="70">
-          <p class="hint">Repair estimate above this share of vehicle value → write-off review, never an automatic repair.</p>
+          <p class="hint">Repair estimate above this share of vehicle value goes to write-off review, never to an automatic repair.</p>
         </div>
       </div>
       <p class="thresh-note">
-        These four numbers are illustrative starting points, not validated production values — the point of
-        exposing them as dials instead of burying them in code is to force this conversation with the insurer
-        explicitly, before launch, rather than discover the right thresholds by incident. They apply globally —
-        try moving one, then switch claims above. The escalate floor is kept at least 5 points below the
-        auto-approve bar on purpose — let them cross and auto-approve goes quietly unreachable with no warning.
+        These four numbers are illustrative starting points rather than validated production values. They are
+        exposed here because they are the insurer's risk policy, and that is a decision worth making deliberately
+        before launch. They apply to every claim, so try moving one and then switching claims above. The escalate
+        floor is held at least five points below the auto-approve bar, because if the two cross then auto-approve
+        becomes unreachable with no warning.
       </p>
     </div>
   </div>
@@ -437,7 +437,7 @@
           </div>
         </div>
         <div>
-          <label class="field-label">Damage — click a panel to cycle none → minor → moderate → severe</label>
+          <label class="field-label">Damage - click a panel to cycle none → minor → moderate → severe</label>
           <div class="car-wrap">
             <svg class="car" viewBox="0 0 566 240" aria-label="Top-down car diagram with clickable damage zones">
               <rect class="car-static" x="185" y="89" width="196" height="62" rx="6"></rect>
@@ -510,8 +510,9 @@
           </label>
           <div class="anomaly-copy">
             <div class="anomaly-title">Anomaly signal flagged on this claim</div>
-            <div class="anomaly-sub">Simulates an upstream fraud check — inconsistent photo metadata, reused images,
-              vehicle mismatch. When on, it overrides every threshold above: no estimate is trusted until a person looks at it.</div>
+            <div class="anomaly-sub">Simulates an upstream fraud check for inconsistent photo metadata, reused images
+              or vehicle mismatch. When it is on, it overrides every threshold above, and the estimate is not used until
+              a person has checked it.</div>
           </div>
         </div>
       </div>
@@ -528,7 +529,7 @@
 
         <div class="hero-row" id="heroRow" style="display:none;">
           <div>
-            <div class="hero-num" id="heroTotal">$0</div>
+            <div class="hero-num" id="heroTotal">£0</div>
             <div class="hero-cap">Estimate</div>
             <div class="hero-range" id="heroRange"></div>
           </div>
@@ -546,7 +547,7 @@
             <tbody id="linesBody"></tbody>
           </table>
         </div>
-        <p class="hint" id="noDamageHint">No damage recorded yet — click a panel on the car diagram, or load a claim above.</p>
+        <p class="hint" id="noDamageHint">No damage recorded yet. Click a panel on the car diagram, or load a claim above.</p>
       </div>
     </div>
   </div>
@@ -562,20 +563,20 @@
       <div class="review-totals" id="reviewTotals" style="display:none;">
         <div class="rt-item">
           <div class="rt-label">AI estimate</div>
-          <div class="rt-num" id="rtAi">$0</div>
+          <div class="rt-num" id="rtAi">£0</div>
         </div>
         <div class="rt-item">
           <div class="rt-label">Adjuster total</div>
-          <div class="rt-num" id="rtAdjuster">$0</div>
+          <div class="rt-num" id="rtAdjuster">£0</div>
         </div>
         <div>
-          <button class="authorize-btn" id="authorizeBtn">Authorize repair</button>
+          <button class="authorize-btn" id="authorizeBtn">Authorise repair</button>
         </div>
       </div>
-      <div class="auth-banner" id="authBanner">✓ Authorized — estimate locked in and marked ready for repair. (Repair-shop routing and negotiation happen downstream, outside what's built here.)</div>
+      <div class="auth-banner" id="authBanner">✓ Authorised. The estimate is locked and marked ready for repair. Repair-shop routing and negotiation happen downstream, outside what is built here.</div>
 
       <div class="dispute-block" id="disputeBlock">
-        <button class="btn small" id="disputeOpenBtn">Dispute this estimate — repair shop or policyholder</button>
+        <button class="btn small" id="disputeOpenBtn">Dispute this estimate - repair shop or policyholder</button>
         <div class="dispute-form" id="disputeForm">
           <label class="field-label" for="disputeAmount">What figure are they claiming it should be?</label>
           <div class="dispute-row">
@@ -590,11 +591,10 @@
 
   <footer>
     <p class="footnote">
-      Deliberately not built: any real vision model, a live backend, or actual claims data — this is a decision
-      engine and a UX, not a computer-vision pipeline. In production, the panel-level damage tags would come from
-      a vision model call rather than a click; everything downstream of that click — the cost model, the
-      confidence weighting, the tiering, and the review UX — is the actual product decision, and it's the part
-      built here. The vision, the eval plan, and the reasoning behind every threshold live in the PRD.
+      Not built here: a real vision model, a live backend, or actual claims data. In production the panel-level
+      damage tags would come from a vision model rather than a click. Everything after that click is what this
+      prototype covers: the cost model, the confidence weighting, the tiering, and the review interface. The
+      vision, the eval plan and the reasoning behind each threshold are in the PRD.
     </p>
     <div class="foot-actions">
       <button class="copy-btn" id="copyBtn">Copy claim summary</button>
@@ -608,7 +608,7 @@
 (function(){
   "use strict";
 
-  // structuralRisk:false = a bolt-on cosmetic cover (bumper), not load-bearing —
+  // structuralRisk:false = a bolt-on cosmetic cover (bumper), not load-bearing -
   // severe damage there is bad but isn't, by itself, a frame/safety question.
   // Everything else defaults to structuralRisk:true (doors/hood/trunk sit on or
   // adjacent to the crash structure, so severe damage there plausibly is one).
@@ -629,7 +629,7 @@
   var GLASS_MID = {minor:110, moderate:250, severe:515};
   var GLASS_CONF = {minor:0.97, moderate:0.95, severe:0.93};
   var CLASS_MULT = {economy:0.75, midsize:1.0, luxury:1.7};
-  // Assumed market value of the insured vehicle — what the total-loss line is a share of.
+  // Assumed market value of the insured vehicle - what the total-loss line is a share of.
   // Economy sits low on purpose: write-offs happen to old cheap cars, not new expensive ones,
   // because it takes far less damage to cross the line.
   var VEHICLE_VALUE = {economy:4500, midsize:16000, luxury:48000};
@@ -665,7 +665,7 @@
   Object.keys(ZONE_META).forEach(function(z){ state.zones[z]="none"; });
 
   function $(id){ return document.getElementById(id); }
-  function money(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function money(n){ return "£" + Math.round(n).toLocaleString("en-GB"); }
   function pct(n){ return Math.round(n*100) + "%"; }
 
   function computeLine(zoneId, severity, vehicleClass){
@@ -715,7 +715,7 @@
     var t = state.thresholds;
     if(!a) return {tier:"none", reason:"No damage recorded for this claim yet."};
     if(state.anomalyFlag) return {tier:"escalate",
-      reason:"Anomaly signal flagged — inconsistent metadata or possible image reuse. Routed to a senior adjuster; no estimate is trusted until a person looks at it, regardless of how the damage itself scores."};
+      reason:"Anomaly signal flagged for inconsistent metadata or possible image reuse. The claim goes to a senior adjuster, and the estimate is not used until a person has checked it, whatever the damage itself scores."};
     // Total loss is checked before structural and before confidence: once repair cost approaches
     // the value of the car, "how do we repair this" is the wrong question entirely.
     var value = VEHICLE_VALUE[state.vehicleClass];
@@ -723,21 +723,21 @@
     if(a.totalMid >= tlLine) return {tier:"total_loss",
       reason:"Estimated repair (" + money(a.totalMid) + ") is at or above " + Math.round(t.totalLossPct*100) +
         "% of the vehicle's assumed value (" + money(value) + "), so the question is no longer how to repair it. " +
-        "Routed to write-off valuation — always a human decision. Triage sizes it; it doesn't settle it."};
+        "This goes to write-off valuation instead of repair authorisation. That decision is always made by a person."};
     if(a.structuralFlag) return {tier:"escalate",
-      reason:"Structural or safety-relevant damage detected. Frame and safety-system integrity can't be confirmed from photos alone — this needs a physical inspection before any number is authorized."};
+      reason:"Structural or safety-relevant damage detected. Frame and safety-system integrity cannot be confirmed from photos, so this needs a physical inspection before any figure is authorised."};
     if(a.confidence < t.escFloor) return {tier:"escalate",
-      reason:"Model confidence ("+pct(a.confidence)+") is below the floor for a trusted estimate ("+pct(t.escFloor)+"). Send to a human before any figure leaves this screen."};
+      reason:"Model confidence ("+pct(a.confidence)+") is below the floor for a trusted estimate ("+pct(t.escFloor)+"), so the claim goes to a human before any figure is used."};
     if(a.totalMid <= t.ceiling && a.confidence >= t.autoConf) return {tier:"auto",
-      reason:"Low value (≤"+money(t.ceiling)+"), high confidence (≥"+pct(t.autoConf)+"), no structural or anomaly flags. This estimate clears on its own and goes straight to repair authorization."};
+      reason:"Low value (≤"+money(t.ceiling)+"), high confidence (≥"+pct(t.autoConf)+"), no structural or anomaly flags. This estimate clears on its own and goes straight to repair authorisation."};
     // The estimate is a range, not a point. If the top of that range crosses the total-loss
     // line even though the midpoint doesn't, the adjuster should know before authorizing.
     var borderline = a.totalHigh >= tlLine
       ? " ⚠ The top of the estimate range (" + money(a.totalHigh) + ") crosses the total-loss line of " +
-        money(tlLine) + " — confirm valuation before authorizing."
+        money(tlLine) + ", so confirm the valuation before authorising."
       : "";
     return {tier:"assisted",
-      reason:"Doesn't clear the auto-approve bar and isn't flagged for escalation — an adjuster reviews the line items below before anything is authorized." + borderline};
+      reason:"This does not clear the auto-approve bar and is not flagged for escalation, so an adjuster reviews the line items below before anything is authorised." + borderline};
   }
 
   function sevColor(sev){
@@ -794,13 +794,13 @@
     var el = $("damageSummary");
     var damaged = Object.keys(state.zones).filter(function(z){ return state.zones[z] !== "none"; });
     if(damaged.length === 0){
-      el.innerHTML = '<span class="ds-label">DAMAGE RECORDED</span>None yet — click any panel above.';
+      el.innerHTML = '<span class="ds-label">DAMAGE RECORDED</span>None yet. Click any panel above.';
       return;
     }
     var chips = damaged.map(function(z){
       var sev = state.zones[z];
       return '<span class="ds-chip"><span class="ds-dot" style="background:'+sevColor(sev)+'"></span>'+
-        ZONE_META[z].label + ' — ' + sevWord(sev) + '</span>';
+        ZONE_META[z].label + ' - ' + sevWord(sev) + '</span>';
     }).join("");
     el.innerHTML = '<span class="ds-label">DAMAGE RECORDED</span>' + chips;
   }
@@ -945,7 +945,7 @@
   }
 
   // Any change to the claim or the thresholds invalidates an authorization and
-  // anything downstream of it — don't leave a stale "authorized" banner on screen.
+  // anything downstream of it - don't leave a stale "authorised" banner on screen.
   function resetAuthState(){
     state.authorized = false;
     state.disputeOpen = false;
@@ -954,8 +954,8 @@
     var banner = $("authBanner");
     banner.classList.remove("show");
     banner.classList.remove("reopened");
-    banner.textContent = "✓ Authorized — estimate locked in and marked ready for repair. " +
-      "(Repair-shop routing and negotiation happen downstream, outside what's built here.)";
+    banner.textContent = "✓ Authorised. The estimate is locked and marked ready for repair. " +
+      "Repair-shop routing and negotiation happen downstream, outside what is built here.";
     $("disputeBlock").classList.remove("show");
     $("disputeForm").classList.remove("show");
     $("disputeCapture").classList.remove("show");
@@ -973,12 +973,12 @@
     var sev = state.zones[z];
     if(sev === "none"){
       el.classList.remove("has-damage");
-      el.innerHTML = "<b>" + ZONE_META[z].label + "</b> — no damage. Click to set minor.";
+      el.innerHTML = "<b>" + ZONE_META[z].label + "</b> - no damage. Click to set minor.";
       return;
     }
     el.classList.add("has-damage");
     var line = computeLine(z, sev, state.vehicleClass);
-    el.innerHTML = "<b>" + ZONE_META[z].label + "</b> — " + sevWord(sev) + " (" + line.damage + "), " +
+    el.innerHTML = "<b>" + ZONE_META[z].label + "</b> - " + sevWord(sev) + " (" + line.damage + "), " +
       pct(line.confidence) + " confidence, " + money(line.mid) +
       (line.structural ? " · <b style=\"color:var(--crit)\">structural</b>" : "") + ". Click to cycle.";
   }
@@ -1051,7 +1051,7 @@
     // human has to have a route back to one.
     var banner = $("authBanner");
     banner.classList.add("reopened");
-    banner.textContent = "↺ Reopened — authorization withdrawn and the claim is back in assisted review, " +
+    banner.textContent = "↺ Reopened. The authorisation is withdrawn and the claim is back in assisted review, " +
       "with the disputed figure attached for the adjuster.";
 
     $("disputeForm").classList.remove("show");
@@ -1059,12 +1059,12 @@
     var wasAuto = state.authorizedTier === "auto";
     $("disputeCapture").innerHTML =
       '<span class="dc-label">CAPTURED FOR THE FEEDBACK LOOP</span>' +
-      'Authorized <b>' + money(authorized) + '</b> · disputed at <b>' + money(claimed) + '</b> — ' +
-      money(Math.abs(delta)) + ' ' + direction + ', <b>' + Math.round(pctOff*100) + '%</b> off.<br>' +
+      'Authorised <b>' + money(authorized) + '</b>, disputed at <b>' + money(claimed) + '</b>, ' +
+      money(Math.abs(delta)) + ' ' + direction + ' and <b>' + Math.round(pctOff*100) + '%</b> off.<br>' +
       'Logged against the estimate-accuracy eval set, broken out by the panels on this claim' +
       (wasAuto
-        ? ', <b>and flagged as a false-approve candidate</b> — it cleared with no human touch, so it is exactly the case the auto-approve audit exists to catch.'
-        : '. It cleared assisted review, so it also counts against adjuster override quality, not just the model.');
+        ? ', <b>and flagged as a false-approve candidate</b>. It cleared with no human review, which is what the auto-approve audit is sampling for.'
+        : '. It cleared assisted review, so it counts against adjuster override quality as well as the model.');
     $("disputeCapture").classList.add("show");
   });
   $("anomalyToggle").addEventListener("change", function(e){
@@ -1075,7 +1075,7 @@
   });
   // Kept at least MIN_GAP apart on purpose: if the escalate floor ever reaches or
   // passes the auto-approve bar, the escalate check (which runs first in decide())
-  // would fire before auto-approve ever gets evaluated — auto-approve goes quietly
+  // would fire before auto-approve ever gets evaluated, auto-approve goes quietly
   // unreachable with no error, which is exactly the kind of thing that shows up as
   // a support ticket, not a code review comment.
   var MIN_GAP = 0.05;
@@ -1102,7 +1102,7 @@
   $("copyBtn").addEventListener("click", function(){
     var a = assess();
     var d = decide(a);
-    var lines = ["TRIAGE — CLAIM SUMMARY", ""];
+    var lines = ["TRIAGE - CLAIM SUMMARY", ""];
     lines.push("Vehicle class: " + state.vehicleClass +
       " (assumed value " + money(VEHICLE_VALUE[state.vehicleClass]) +
       ", total-loss line " + money(Math.round(state.thresholds.totalLossPct * VEHICLE_VALUE[state.vehicleClass])) + ")");
@@ -1120,7 +1120,7 @@
     }
     if(state.disputeLogged){
       lines.push("");
-      lines.push("DISPUTED — authorized " + money(state.authorizedTotal) +
+      lines.push("DISPUTED - authorised " + money(state.authorizedTotal) +
         ", claimed " + money(state.disputeAmount) + ". Claim reopened; delta logged to the eval set.");
     }
     var text = lines.join("\n");
