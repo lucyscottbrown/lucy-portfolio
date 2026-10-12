@@ -534,7 +534,7 @@
             <div class="hero-range" id="heroRange"></div>
           </div>
           <div class="meter-block">
-            <div class="meter-top"><span>Model confidence</span><span id="confPct">—</span></div>
+            <div class="meter-top"><span>Confidence (weakest line)</span><span id="confPct">—</span></div>
             <div class="meter-track"><div class="meter-fill" id="confFill" style="width:0%"></div></div>
           </div>
         </div>
@@ -700,15 +700,17 @@
       if(l) lines.push(l);
     });
     if(lines.length === 0) return null;
-    var totalLow=0, totalMid=0, totalHigh=0, weightSum=0, confSum=0, structuralFlag=false;
+    var totalLow=0, totalMid=0, totalHigh=0, structuralFlag=false, weakest=null;
     lines.forEach(function(l){
       totalLow += l.low; totalMid += l.mid; totalHigh += l.high;
-      confSum += l.mid * l.confidence; weightSum += l.mid;
+      if(!weakest || l.confidence < weakest.confidence) weakest = l;
       if(l.structural) structuralFlag = true;
     });
-    var confidence = weightSum > 0 ? confSum/weightSum : 0;
+    // The claim is only as trustworthy as its least certain line. A cost-weighted blend
+    // would let a confident windscreen pull an uncertain bumper out of escalation -
+    // averaging away exactly the panel that needed a human.
     return {lines:lines, totalLow:totalLow, totalMid:totalMid, totalHigh:totalHigh,
-      confidence:confidence, structuralFlag:structuralFlag};
+      confidence:weakest.confidence, weakestLabel:weakest.label, structuralFlag:structuralFlag};
   }
 
   function decide(a){
@@ -727,9 +729,9 @@
     if(a.structuralFlag) return {tier:"escalate",
       reason:"Structural or safety-relevant damage detected. Frame and safety-system integrity cannot be confirmed from photos, so this needs a physical inspection before any figure is authorised."};
     if(a.confidence < t.escFloor) return {tier:"escalate",
-      reason:"Model confidence ("+pct(a.confidence)+") is below the floor for a trusted estimate ("+pct(t.escFloor)+"), so the claim goes to a human before any figure is used."};
+      reason:"Confidence on the weakest line ("+a.weakestLabel+", "+pct(a.confidence)+") is below the floor for a trusted estimate ("+pct(t.escFloor)+"), so the claim goes to a human before any figure is used."};
     if(a.totalMid <= t.ceiling && a.confidence >= t.autoConf) return {tier:"auto",
-      reason:"Low value (≤"+money(t.ceiling)+"), high confidence (≥"+pct(t.autoConf)+"), no structural or anomaly flags. This estimate clears on its own and goes straight to repair authorisation."};
+      reason:"Low value (≤"+money(t.ceiling)+"), every line at or above "+pct(t.autoConf)+" confidence, no structural or anomaly flags. This estimate clears on its own and goes straight to repair authorisation."};
     // The estimate is a range, not a point. If the top of that range crosses the total-loss
     // line even though the midpoint doesn't, the adjuster should know before authorizing.
     var borderline = a.totalHigh >= tlLine
@@ -1111,7 +1113,7 @@
     if(a){
       lines.push("");
       lines.push("Estimate: " + money(a.totalMid) + " (range " + money(a.totalLow) + "-" + money(a.totalHigh) + ")");
-      lines.push("Confidence: " + pct(a.confidence));
+      lines.push("Confidence (weakest line): " + pct(a.confidence) + " - " + a.weakestLabel);
       lines.push("");
       lines.push("Line items:");
       a.lines.forEach(function(l){
