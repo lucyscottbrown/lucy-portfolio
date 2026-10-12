@@ -913,13 +913,21 @@
       inp.addEventListener("input", function(){
         var z = inp.getAttribute("data-override-zone");
         var v = parseFloat(inp.value);
-        if(!isNaN(v)) { state.overrides[z] = v; renderReview(a); }
+        // Update the total in place rather than re-rendering the list - a re-render
+        // replaces this input mid-keystroke and drops focus after one character.
+        if(!isNaN(v)) { state.overrides[z] = v; $("rtAdjuster").textContent = money(currentAdjusterTotal()); }
       });
     });
 
+    function currentAdjusterTotal(){
+      return a.lines.reduce(function(sum, l){
+        return sum + (state.overrides.hasOwnProperty(l.zoneId) ? state.overrides[l.zoneId] : l.mid);
+      }, 0);
+    }
+
     $("authorizeBtn").onclick = function(){
       state.authorized = true;
-      state.authorizedTotal = adjusterTotal;
+      state.authorizedTotal = currentAdjusterTotal();
       state.authorizedTier = decide(a).tier;
       $("authBanner").classList.add("show");
       $("disputeBlock").classList.add("show");
