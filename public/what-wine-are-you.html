@@ -260,7 +260,7 @@ function renderResult(){
     <p class="toast" id="toast"></p>`;
   document.getElementById("again").onclick = renderIntro;
   document.getElementById("copy").onclick = () => {
-    const text = `I'm ${w.name} 🍷 ${w.blurb.split(". ")[0]}. What wine are you?`;
+    const text = `I'm ${w.name} 🍷 ${w.blurb.split(". ")[0]}. What wine are you? https://lucyscottbrown.com/what-wine-are-you`;
     const t = document.getElementById("toast");
     try{
       navigator.clipboard.writeText(text).then(()=>t.textContent="Copied. Paste it wherever you like.",
