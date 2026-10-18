@@ -254,18 +254,24 @@ function renderResult(){
       </div>
     </section>
     <div class="row result-actions" style="margin-top:18px">
-      <button class="btn" id="copy">Copy my result</button>
+      <button class="btn" id="share">Share my result</button>
       <button class="btn ghost" id="again">Take it again</button>
     </div>
     <p class="toast" id="toast"></p>`;
   document.getElementById("again").onclick = renderIntro;
-  document.getElementById("copy").onclick = () => {
-    const text = `I'm ${w.name} 🍷 ${w.blurb.split(". ")[0]}. What wine are you? https://lucyscottbrown.com/what-wine-are-you`;
+  document.getElementById("share").onclick = async () => {
+    const url = "https://lucyscottbrown.com/what-wine-are-you";
+    const line = `I'm ${w.name} 🍷 ${w.blurb.split(". ")[0]}. What wine are you?`;
+    const text = `${line} ${url}`;
     const t = document.getElementById("toast");
-    try{
-      navigator.clipboard.writeText(text).then(()=>t.textContent="Copied. Paste it wherever you like.",
-        ()=>t.textContent=text);
-    }catch(e){ t.textContent = text; }
+    if (navigator.share) {
+      try { await navigator.share({ title: "What Wine Are You?", text: line, url }); return; }
+      catch (e) { if (e.name === "AbortError") return; }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      t.textContent = "Copied. Paste it wherever you like.";
+    } catch (e) { t.textContent = text; }
   };
 }
 
