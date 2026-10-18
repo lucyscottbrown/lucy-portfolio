@@ -111,20 +111,6 @@ export const projects: Project[] = [
     outcome:
       "A funded venture with a validated product direction, built on real customer evidence rather than internal conviction. Received a Special Recognition Award from Shell for the work.\n\nIt was also one of the formative experiences that taught me how to think about product from first principles, before there's a roadmap, a team or a brief.",
   },
-  {
-    slug: "elyndra",
-    title: "Elyndra",
-    subtitle: "Product Advisor · 2024 · AI startup, social care",
-    tag: "Product Advisory",
-    description:
-      "Product advisory work that helped an early-stage AI startup secure £1M in VC funding.",
-    problem:
-      "Elyndra was an AI startup in social care with a promising concept, but it needed product management structure to attract serious investment and build effectively.",
-    whatIDid:
-      "I volunteered as a product advisor to help the founder implement product management best practices. That meant introducing agile methodology and ticket-based development for day-to-day MVP build management, and working with the founder to create a company vision and streamline problem identification.",
-    outcome:
-      "The work contributed to securing £1M in VC funding, with 3 pivotal feature decisions that resonated with 90% of beta users.",
-  },
 ];
 
 export type FunProject = {
