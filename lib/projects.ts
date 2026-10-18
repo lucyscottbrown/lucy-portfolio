@@ -12,6 +12,21 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "triage",
+    title: "Triage - AI Claims Copilot",
+    subtitle: "Prototype · 2026 · Applied AI / insurance",
+    tag: "Applied AI",
+    liveUrl: "/triage",
+    description:
+      "An AI copilot for car-insurance claims. It reads damage photos, drafts an itemised estimate, scores its own confidence on each line, and decides which claims can clear without a person - and which can't. Built hands-on in Claude Code.",
+    problem:
+      "Car-insurance claims run on two people's judgement in sequence. An agent looks at the damage photos, prices the repair by eye and experience, and a senior adjuster re-reviews it before anything is authorised. It's slow, it's inconsistent (two agents will price the same dent differently), and it spends senior time on a scratched bumper in exactly the same way it does on a write-off.\n\nVision models can already spot damage in a photo. The harder question is how much of the review-and-approval chain can be trusted to run without a person, and how the system knows when it can't.",
+    whatIDid:
+      "I built Triage, a working prototype of an adjuster's copilot. It reads the damage photos, drafts an itemised estimate, and scores its own confidence on each line. Then it routes the claim into one of four lanes: auto-approve, assisted review, escalate, or total-loss review.\n\nIt's deliberately augment, not replace. Confidence is scored per line item rather than blended, because one averaged number would hide exactly the panel that needs a human to look at it. A fraud signal overrides every other rule, so a clean-looking claim with a suspect photo can't sail through. And the thresholds that decide which lane a claim lands in are exposed as settings on the page. They're the insurer's actual risk policy, and that's a decision worth making on purpose rather than burying in code.\n\nAlongside the prototype I worked out the eval plan and the feedback loop behind it. The part I care most about is the one nobody would build by default. Auto-approved claims generate no natural feedback, so a wrong estimate that nobody complains about just looks like a success. That has to be caught with a deliberate audit sample, and it's the only signal allowed to widen what gets auto-approved.\n\nI prototyped the whole thing hands-on in Claude Code. The vision step is simulated with a clickable diagram, because the product decision is what happens after the damage is tagged, not the tagging itself.",
+    outcome:
+      "A working demonstration of where the automation boundary should sit in a regulated, high-liability workflow, and how to make that boundary auditable rather than just adjustable. Open the live tool and move the dials to watch claims change lanes.",
+  },
+  {
     slug: "ai-scorecard",
     title: "Public-Sector AI Use-Case Scorecard",
     subtitle: "Self-initiated · 2026 · Applied AI / public sector",
@@ -109,6 +124,22 @@ export const projects: Project[] = [
       "I volunteered as a product advisor to help the founder implement product management best practices. That meant introducing agile methodology and ticket-based development for day-to-day MVP build management, and working with the founder to create a company vision and streamline problem identification.",
     outcome:
       "The work contributed to securing £1M in VC funding, with 3 pivotal feature decisions that resonated with 90% of beta users.",
+  },
+];
+
+export type FunProject = {
+  title: string;
+  description: string;
+  href: string;
+};
+
+// Side projects that link straight to the thing, with no case study.
+export const funProjects: FunProject[] = [
+  {
+    title: "What Wine Are You?",
+    href: "/what-wine-are-you",
+    description:
+      "Six very serious questions about snacks, holidays and your ideal Friday night, and a wine at the end of it. Are you a crowd-pleasing Champagne, a brooding Barolo, or something a bit more orange? No wine knowledge needed. No wrong answers. Possibly some wrong wines.",
   },
 ];
 

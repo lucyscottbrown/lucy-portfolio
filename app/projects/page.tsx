@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { projects } from "@/lib/projects";
+import LiveBadge from "@/components/LiveBadge";
+import JustForFun from "@/components/JustForFun";
 
 export default function Projects() {
   const [featured, ...rest] = projects;
@@ -20,7 +22,7 @@ export default function Projects() {
         </p>
       </section>
 
-      <section className="border-t border-gray-200 pt-10 pb-16">
+      <section className="border-t border-gray-200 pt-10 pb-12">
         <div className="flex flex-col gap-4">
           {/* Featured card */}
           <Link
@@ -29,9 +31,12 @@ export default function Projects() {
           >
             <div className="flex items-start justify-between gap-6">
               <div className="flex flex-col gap-3 flex-1">
-                <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#185FA5]">
-                  {featured.tag}
-                </span>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#185FA5]">
+                    {featured.tag}
+                  </span>
+                  {featured.liveUrl && <LiveBadge />}
+                </div>
                 <h2 className="text-[18px] font-medium leading-snug group-hover:text-[#185FA5] transition-colors">
                   {featured.title}
                 </h2>
@@ -52,9 +57,12 @@ export default function Projects() {
                 className="group block border border-gray-200 rounded p-5 hover:border-gray-400 transition-colors"
               >
                 <div className="flex flex-col gap-2.5">
-                  <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#185FA5]">
-                    {project.tag}
-                  </span>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#185FA5]">
+                      {project.tag}
+                    </span>
+                    {project.liveUrl && <LiveBadge />}
+                  </div>
                   <h2 className="text-[15px] font-medium leading-snug group-hover:text-[#185FA5] transition-colors">
                     {project.title}
                   </h2>
@@ -67,6 +75,10 @@ export default function Projects() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="border-t border-gray-200 pt-10 pb-16">
+        <JustForFun />
       </section>
     </div>
   );
