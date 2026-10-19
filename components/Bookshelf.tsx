@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Book } from "@/lib/books";
 
 function Spine({
@@ -76,8 +76,24 @@ function Shelf({
 }
 
 function Detail({ book }: { book: Book }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  // If the panel opened low on the screen, scroll just enough to bring its
+  // top a third of the way down, so the lifted book stays in view above it.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight * 0.6) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollBy({
+      top: top - window.innerHeight / 3,
+      behavior: reduce ? "auto" : "smooth",
+    });
+  }, [book.slug]);
+
   return (
-    <div className="border border-gray-200 rounded p-6 mt-8">
+    <div ref={ref} className="border border-gray-200 rounded p-6 mt-8">
       <div className="flex items-start gap-4 mb-4">
         <span
           className="w-1 self-stretch rounded-full flex-shrink-0"
@@ -145,16 +161,23 @@ export default function Bookshelf({
   const toggle = (slug: string) =>
     setSelected((current) => (current === slug ? null : slug));
 
-  const selectedBook =
-    [...read, ...unread].find((b) => b.slug === selected) ?? null;
+  // The detail panel opens directly under the shelf the book came from, so it
+  // sits next to the spine that was clicked rather than below both shelves.
+  const selectedRead = read.find((b) => b.slug === selected);
+  const selectedUnread = unread.find((b) => b.slug === selected);
 
   return (
     <div>
+      <p className="text-[13px] text-gray-400 mb-10">
+        Click a spine and I&rsquo;ll tell you what I made of it.
+      </p>
+
       <section>
         <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-6">
           Read
         </p>
         <Shelf books={read} selected={selected} onSelect={toggle} />
+        {selectedRead && <Detail book={selectedRead} />}
       </section>
 
       <section className="mt-14">
@@ -162,15 +185,8 @@ export default function Bookshelf({
           Up next
         </p>
         <Shelf books={unread} selected={selected} onSelect={toggle} />
+        {selectedUnread && <Detail book={selectedUnread} />}
       </section>
-
-      {selectedBook ? (
-        <Detail book={selectedBook} />
-      ) : (
-        <p className="text-[13px] text-gray-400 mt-8">
-          Click a spine and I&rsquo;ll tell you what I made of it.
-        </p>
-      )}
     </div>
   );
 }

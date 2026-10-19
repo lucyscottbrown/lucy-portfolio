@@ -3,63 +3,30 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <style>
   :root{
-    --paper:#F1F4F4; --panel:#FBFCFC; --panel-2:#EDF1F1;
-    --ink:#0E1618; --ink-soft:#33474B; --muted:#5F7377; --line:#D3DCDC;
-    --accent:#0F5C63; --accent-bright:#14808A; --accent-ink:#0A3D42;
-    --accent-bg: #E3EFEF;
-    --ochre:#A8641C; --ochre-bg:#F4E9D8;
+    --paper:#FFFFFF; --panel:#FFFFFF; --panel-2:#F9FAFB;
+    --ink:#0A0A0A; --ink-soft:#374151; --muted:#6B7280; --line:#E5E7EB;
+    --accent:#185FA5; --accent-bright:#134C84; --accent-ink:#185FA5;
+    --accent-bg:#EEF4FA;
+    --ochre:#185FA5; --ochre-bg:#EEF4FA;
     --good:#2E7D5B; --good-bg:#E1F0E7;
-    --warn:#9C6B12; --warn-bg:#F4E9CE;
-    --crit:#AF432B; --crit-bg:#F5E0DA;
-    --shadow: 0 1px 2px rgba(14,22,24,.05), 0 8px 24px -12px rgba(14,22,24,.18);
-    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
-    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --paper:#0C1213; --panel:#141D1F; --panel-2:#0F191A;
-      --ink:#EAF1F0; --ink-soft:#B6C6C6; --muted:#829595; --line:#243435;
-      --accent:#2FA0AA; --accent-bright:#43BCC6; --accent-ink:#B7E7EB;
-      --accent-bg: #102426;
-      --ochre:#D6944A; --ochre-bg:#2A2013;
-      --good:#5FBF8E; --good-bg:#15271F;
-      --warn:#D6A93F; --warn-bg:#2A2213;
-      --crit:#E0806A; --crit-bg:#2C1712;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
-    }
-  }
-  :root[data-theme="dark"]{
-    --paper:#0C1213; --panel:#141D1F; --panel-2:#0F191A;
-    --ink:#EAF1F0; --ink-soft:#B6C6C6; --muted:#829595; --line:#243435;
-    --accent:#2FA0AA; --accent-bright:#43BCC6; --accent-ink:#B7E7EB;
-    --accent-bg: #102426;
-    --ochre:#D6944A; --ochre-bg:#2A2013;
-    --good:#5FBF8E; --good-bg:#15271F;
-    --warn:#D6A93F; --warn-bg:#2A2213;
-    --crit:#E0806A; --crit-bg:#2C1712;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -14px rgba(0,0,0,.6);
-  }
-  :root[data-theme="light"]{
-    --paper:#F1F4F4; --panel:#FBFCFC; --panel-2:#EDF1F1;
-    --ink:#0E1618; --ink-soft:#33474B; --muted:#5F7377; --line:#D3DCDC;
-    --accent:#0F5C63; --accent-bright:#14808A; --accent-ink:#0A3D42;
-    --accent-bg: #E3EFEF;
-    --ochre:#A8641C; --ochre-bg:#F4E9D8;
-    --good:#2E7D5B; --good-bg:#E1F0E7;
-    --warn:#9C6B12; --warn-bg:#F4E9CE;
-    --crit:#AF432B; --crit-bg:#F5E0DA;
-    --shadow: 0 1px 2px rgba(14,22,24,.05), 0 8px 24px -12px rgba(14,22,24,.18);
+    --warn:#9C6B12; --warn-bg:#F7EFDC;
+    --crit:#AF432B; --crit-bg:#F7E6E1;
+    --shadow:none;
+    --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif:var(--sans);
+    --mono:var(--sans);
   }
 
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:
-      radial-gradient(1200px 500px at 15% -10%, var(--accent-bg), transparent),
-      var(--paper);
+    background:var(--paper);
     color:var(--ink);
     font-family:var(--sans);
     -webkit-font-smoothing:antialiased;
@@ -73,33 +40,31 @@
 
   .eyebrow{
     display:flex; align-items:center; gap:10px;
-    font-family:var(--mono); font-size:11.5px; letter-spacing:.09em;
-    text-transform:uppercase; color:var(--muted); margin-bottom:16px;
+    font-size:11px; font-weight:500; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:12px;
   }
-  .eyebrow::before{content:"";width:22px;height:1px;background:var(--muted);display:inline-block;}
 
   h1.title{
-    font-family:var(--serif); font-weight:600; font-size:46px;
-    letter-spacing:-.4px; margin:0 0 6px; text-wrap:balance;
+    font-weight:500; font-size:32px;
+    letter-spacing:-.02em; margin:0 0 12px; text-wrap:balance;
     display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
   }
   h1.title .tagline{
-    font-family:var(--sans); font-weight:500; font-size:17px;
+    font-weight:400; font-size:15px;
     color:var(--muted); letter-spacing:0;
   }
   p.lede{
-    font-size:16.5px; line-height:1.55; color:var(--ink-soft);
+    font-size:15px; line-height:1.7; color:var(--ink-soft);
     max-width:66ch; margin:0 0 26px;
   }
 
   .chips{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:34px;}
   .chips .chips-label{
-    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--muted); margin-right:4px;
+    font-size:13px; color:var(--muted); margin-right:4px;
   }
   .chip{
     font-family:var(--sans); font-size:13px; padding:6px 13px;
-    border-radius:999px; border:1px solid var(--line); background:var(--panel);
+    border-radius:4px; border:1px solid var(--line); background:var(--panel);
     color:var(--ink-soft); cursor:pointer; transition:background .12s,color .12s,border-color .12s;
   }
   .chip:hover{border-color:var(--accent);}
@@ -109,17 +74,15 @@
   @media (max-width:860px){.grid2{grid-template-columns:1fr;}}
 
   .card{
-    background:var(--panel); border:1px solid var(--line); border-radius:14px;
-    box-shadow:var(--shadow); overflow:hidden;
+    background:var(--panel); border:1px solid var(--line); border-radius:4px; overflow:hidden;
   }
   .card-head{
     display:flex; align-items:baseline; justify-content:space-between; gap:12px;
-    padding:16px 20px; border-bottom:1px solid var(--line); background:var(--panel-2);
+    padding:14px 20px; border-bottom:1px solid var(--line);
   }
-  .card-head h2{font-family:var(--serif); font-weight:600; font-size:19px; margin:0;}
+  .card-head h2{font-weight:500; font-size:15px; margin:0;}
   .card-head .tag{
-    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--muted);
+    font-size:12.5px; color:var(--muted);
   }
   .card-body{padding:20px;}
   .stack{display:flex; flex-direction:column; gap:16px;}
@@ -199,9 +162,8 @@
   /* tier badge */
   .tier-badge{
     display:inline-flex; align-items:center; gap:8px;
-    font-family:var(--mono); font-size:11.5px; font-weight:700;
-    letter-spacing:.06em; text-transform:uppercase;
-    padding:7px 13px; border-radius:8px; margin-bottom:14px;
+    font-size:12.5px; font-weight:600;
+    padding:5px 10px; border-radius:4px; margin-bottom:14px;
   }
   .tier-auto{background:var(--good-bg); color:var(--good);}
   .tier-assisted{background:var(--ochre-bg); color:var(--ochre);}
@@ -211,12 +173,12 @@
   .tier-reason{font-size:14px; line-height:1.5; color:var(--ink-soft); margin:0 0 20px;}
 
   .hero-row{display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; margin-bottom:20px;}
-  .hero-num{font-family:var(--serif); font-weight:600; font-size:44px; color:var(--accent); font-variant-numeric:tabular-nums; line-height:1;}
-  .hero-cap{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:4px;}
+  .hero-num{font-weight:500; font-size:40px; color:var(--accent); font-variant-numeric:tabular-nums; line-height:1;}
+  .hero-cap{font-size:12px; color:var(--muted); margin-top:6px;}
   .hero-range{font-family:var(--mono); font-size:12.5px; color:var(--muted); margin-top:2px; font-variant-numeric:tabular-nums;}
 
   .meter-block{flex:1; min-width:180px;}
-  .meter-top{display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+  .meter-top{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:6px;}
   .meter-track{height:8px; border-radius:99px; background:var(--panel-2); border:1px solid var(--line); overflow:hidden;}
   .meter-fill{height:100%; border-radius:99px; transition:width .2s;}
 
@@ -231,8 +193,8 @@
   .table-scroll{overflow-x:auto;}
 
   .sev-pill{
-    display:inline-block; font-family:var(--mono); font-size:10.5px; font-weight:700;
-    text-transform:uppercase; letter-spacing:.04em; padding:3px 8px; border-radius:6px;
+    display:inline-block; font-size:12px; font-weight:500;
+    padding:2px 7px; border-radius:4px;
   }
   .sev-minor{background:var(--accent-bg); color:var(--accent);}
   .sev-moderate{background:var(--warn-bg); color:var(--warn);}
@@ -300,7 +262,7 @@
   }
   .btn{
     font-family:var(--sans); font-size:12.5px; font-weight:600; padding:6px 12px;
-    border-radius:7px; border:1px solid var(--line); background:var(--panel); color:var(--ink-soft);
+    border-radius:4px; border:1px solid var(--line); background:var(--panel); color:var(--ink-soft);
     cursor:pointer; transition:all .12s;
   }
   .btn:hover{border-color:var(--accent); color:var(--accent);}
@@ -311,10 +273,10 @@
     border-top:1px solid var(--line); flex-wrap:wrap; gap:14px;
   }
   .review-totals .rt-item{font-size:13px;}
-  .review-totals .rt-item .rt-label{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-family:var(--mono);}
-  .review-totals .rt-item .rt-num{font-family:var(--serif); font-weight:600; font-size:22px; font-variant-numeric:tabular-nums;}
+  .review-totals .rt-item .rt-label{color:var(--muted); font-size:12px;}
+  .review-totals .rt-item .rt-num{font-weight:500; font-size:22px; font-variant-numeric:tabular-nums;}
   .authorize-btn{
-    font-family:var(--sans); font-weight:600; font-size:14px; padding:11px 20px; border-radius:9px;
+    font-family:var(--sans); font-weight:500; font-size:13px; padding:9px 18px; border-radius:4px;
     background:var(--accent); color:#fff; border:none; cursor:pointer; transition:background .12s;
   }
   .authorize-btn:hover{background:var(--accent-bright);}
@@ -355,7 +317,7 @@
   }
   .foot-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
   .copy-btn{
-    font-family:var(--mono); font-size:12px; letter-spacing:.03em; padding:9px 15px; border-radius:8px;
+    font-size:13px; padding:8px 15px; border-radius:4px;
     border:1px solid var(--line); background:var(--panel); color:var(--ink-soft); cursor:pointer;
   }
   .copy-btn:hover{border-color:var(--accent); color:var(--accent);}
@@ -369,30 +331,30 @@
 
 <div class="wrap">
 
-  <div class="eyebrow">CAR INSURANCE CLAIMS &middot; WORKING PROTOTYPE</div>
-  <h1 class="title">Triage <span class="tagline">- an adjuster's copilot for damage claims</span></h1>
+  <div class="eyebrow">Working prototype</div>
+  <h1 class="title">Triage <span class="tagline">Car insurance damage claims</span></h1>
   <p class="lede">
-    Triage reads the submitted damage photos, drafts an itemised estimate, and scores its own
-    confidence on each line. Cheap, unambiguous claims clear without a person. Everything else goes
-    to an adjuster with the reasoning attached. The thresholds that decide which is which are
-    exposed as settings on this page.
+    Triage looks at photos of the damage, drafts an itemised repair estimate and gives each line a
+    confidence score. Low-value claims where every line has high confidence are approved
+    automatically. Every other claim goes to an adjuster, along with the reasons it was sent there.
+    You can change the thresholds that make this decision in the settings below.
   </p>
 
   <div class="chips" id="presetChips">
-    <span class="chips-label">LOAD A CLAIM</span>
+    <span class="chips-label">Load an example claim:</span>
   </div>
 
   <div class="card" style="margin-bottom:22px;">
     <div class="card-head">
       <h2>Thresholds</h2>
-      <span class="tag">APPLIES TO EVERY CLAIM</span>
+      <span class="tag">Applies to every claim</span>
     </div>
     <div class="card-body">
       <div class="thresh-grid">
         <div class="thresh-item">
           <div class="thresh-top"><span class="thresh-name">Auto-approve ceiling</span><span class="thresh-val" id="ceilingVal">£750</span></div>
           <input type="range" id="ceilingSlider" min="100" max="3000" step="50" value="750">
-          <p class="hint">Estimates at or below this, with confidence cleared, need no human touch.</p>
+          <p class="hint">Estimates at or below this amount, with confidence above the bar, are approved without an adjuster.</p>
         </div>
         <div class="thresh-item">
           <div class="thresh-top"><span class="thresh-name">Confidence to auto-approve</span><span class="thresh-val" id="autoConfVal">90%</span></div>
@@ -424,7 +386,6 @@
     <div class="card">
       <div class="card-head">
         <h2>Claim</h2>
-        <span class="tag">THE INTAKE</span>
       </div>
       <div class="card-body stack">
         <div class="vehicle-row">
@@ -523,7 +484,6 @@
     <div class="card">
       <div class="card-head">
         <h2>Assessment</h2>
-        <span class="tag">LIVE READOUT</span>
       </div>
       <div class="card-body">
         <div id="tierBadge"></div>
@@ -557,7 +517,6 @@
   <div class="card" style="margin-top:22px;">
     <div class="card-head">
       <h2>Adjuster review</h2>
-      <span class="tag">HUMAN IN THE LOOP</span>
     </div>
     <div class="card-body">
       <div id="reviewList"></div>
