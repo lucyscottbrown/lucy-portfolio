@@ -137,8 +137,10 @@ export default async function ProjectPage({
             alt={project.photo.alt}
             width={project.photo.width}
             height={project.photo.height}
-            sizes="260px"
-            className="w-full max-w-[260px] h-auto rounded"
+            sizes="(max-width: 720px) 100vw, 640px"
+            className={`w-full h-auto rounded ${
+              project.photo.height > project.photo.width ? "max-w-[420px]" : ""
+            }`}
           />
           <figcaption className="text-[13px] text-gray-500 mt-3">
             {project.photo.caption}

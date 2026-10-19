@@ -113,9 +113,9 @@ export const projects: Project[] = [
     slug: "shell-remote-sense",
     photo: {
       src: "/photos/mine-singrauli-2019.jpg",
-      width: 260,
-      height: 620,
-      alt: "Lucy in a hard hat and hi-vis vest on the steps of a mining haul truck",
+      width: 1600,
+      height: 1200,
+      alt: "Lucy and three colleagues in hard hats and hi-vis vests on the steps of a large mining haul truck",
       caption: "On a mine site visit in Singrauli, India, January 2019",
     },
     stats: [
@@ -138,9 +138,9 @@ export const projects: Project[] = [
     slug: "tulli",
     photo: {
       src: "/photos/wind-fife-2019.jpg",
-      width: 900,
-      height: 1125,
-      alt: "Lucy in a red hard hat at a wind turbine site",
+      width: 1200,
+      height: 1600,
+      alt: "Lucy and a colleague in red hard hats in front of a wind turbine",
       caption: "At a wind turbine site in Fife, Scotland, September 2019",
     },
     stats: [
