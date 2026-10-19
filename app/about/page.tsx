@@ -29,12 +29,12 @@ export default function About() {
             priority
           />
           <figcaption className="text-[13px] text-gray-500 mt-3">
-            Speaking on a panel, October 2025
+            Speaking on a panel
           </figcaption>
         </figure>
 
         {/* Prose */}
-        <div className="flex flex-col gap-5 text-[15px] leading-[1.75] text-gray-700">
+        <div className="flow-root space-y-5 text-[15px] leading-[1.75] text-gray-700">
           <p>
             Good product work starts with being honest about what the evidence
             says. That means looking at what the data and the users are actually
@@ -66,6 +66,19 @@ export default function About() {
             that useful, because the problems that stall a product often sit
             between those areas rather than inside one of them.
           </p>
+          <figure className="sm:float-right sm:w-[240px] sm:ml-8 sm:mb-4">
+            <Image
+              src="/photos/girls-in-tech-stand.jpg"
+              alt="Lucy standing behind a stand with handouts at a Girls in Tech day"
+              width={900}
+              height={1200}
+              sizes="(max-width: 640px) 100vw, 240px"
+              className="w-full h-auto rounded"
+            />
+            <figcaption className="text-[13px] text-gray-500 mt-3">
+              At a Girls in Tech day at a school
+            </figcaption>
+          </figure>
           <p>
             The work I enjoy most is on complex B2B software for technical
             users, where the product has to earn their trust before they will

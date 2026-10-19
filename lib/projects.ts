@@ -72,6 +72,13 @@ export const projects: Project[] = [
   },
   {
     slug: "clavium-gtm",
+    photo: {
+      src: "/photos/consensus-hong-kong.jpg",
+      width: 1600,
+      height: 1200,
+      alt: "Lucy at Consensus Hong Kong, standing in front of the illuminated conference sign",
+      caption: "At Consensus Hong Kong",
+    },
     stats: [
       { value: "$16M ARR", label: "serviceable market sized over five years" },
       { value: "Up to 4", label: "product owners line-managed" },
@@ -116,7 +123,7 @@ export const projects: Project[] = [
       width: 1600,
       height: 1200,
       alt: "Lucy and three colleagues in hard hats and hi-vis vests on the steps of a large mining haul truck",
-      caption: "On a mine site visit in Singrauli, India, January 2019",
+      caption: "On a mine site visit in Singrauli, India",
     },
     stats: [
       { value: "$400k", label: "revenue from new B2B customers" },
@@ -141,7 +148,7 @@ export const projects: Project[] = [
       width: 1200,
       height: 1600,
       alt: "Lucy and a colleague in red hard hats in front of a wind turbine",
-      caption: "At a wind turbine site in Fife, Scotland, September 2019",
+      caption: "At a wind turbine site in Fife, Scotland",
     },
     stats: [
       { value: "$1.5M", label: "internal funding secured" },
