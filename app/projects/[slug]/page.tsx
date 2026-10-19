@@ -44,6 +44,58 @@ function ProseSection({
   );
 }
 
+type Project = NonNullable<ReturnType<typeof getProject>>;
+
+function Stats({
+  stats,
+  stacked,
+}: {
+  stats: NonNullable<Project["stats"]>;
+  stacked: boolean;
+}) {
+  const cols = stacked
+    ? "grid-cols-1 auto-rows-fr flex-1"
+    : `grid-cols-1 ${stats.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`;
+  return (
+    <dl
+      className={`grid ${cols} gap-px bg-gray-200 border border-gray-200 rounded overflow-hidden`}
+    >
+      {stats.map((stat) => (
+        <div
+          key={stat.label}
+          className="bg-white p-5 flex flex-col justify-center gap-1"
+        >
+          <dt className="sr-only">{stat.label}</dt>
+          <dd className="text-[32px] font-medium tracking-tight leading-none text-[#185FA5]">
+            {stat.value}
+          </dd>
+          <dd className="text-[13px] leading-[1.5] text-gray-600 mt-2">
+            {stat.label}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function Photo({ photo }: { photo: NonNullable<Project["photo"]> }) {
+  return (
+    <figure>
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="(max-width: 720px) 100vw, 640px"
+        className="w-full h-auto rounded"
+      />
+      <figcaption className="text-[13px] text-gray-500 mt-3">
+        {photo.caption}
+      </figcaption>
+    </figure>
+  );
+}
+
 export default async function ProjectPage({
   params,
 }: {
@@ -52,6 +104,7 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
+  const portrait = !!project.photo && project.photo.height > project.photo.width;
 
   return (
     <div className="max-w-[720px] mx-auto px-10 max-sm:px-5">
@@ -80,29 +133,24 @@ export default async function ProjectPage({
         )}
       </section>
 
-      {/* At a glance: results first, for readers who skim */}
+      {/* At a glance: results first, for readers who skim. A portrait photo
+          sits beside the stats so the row is filled; a landscape one runs
+          full width below them. */}
       {project.stats && (
-        <section className="pt-10">
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
-            At a glance
-          </h2>
-          <dl
-            className={`grid grid-cols-1 ${
-              project.stats.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"
-            } gap-px bg-gray-200 border border-gray-200 rounded overflow-hidden`}
-          >
-            {project.stats.map((stat) => (
-              <div key={stat.label} className="bg-white p-5 flex flex-col gap-1">
-                <dt className="sr-only">{stat.label}</dt>
-                <dd className="text-[32px] font-medium tracking-tight leading-none text-[#185FA5]">
-                  {stat.value}
-                </dd>
-                <dd className="text-[13px] leading-[1.5] text-gray-600 mt-2">
-                  {stat.label}
-                </dd>
-              </div>
-            ))}
-          </dl>
+        <section
+          className={`pt-10 ${
+            portrait
+              ? "grid grid-cols-1 sm:grid-cols-[1fr_260px] gap-6 items-stretch"
+              : ""
+          }`}
+        >
+          <div className="flex flex-col">
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
+              At a glance
+            </h2>
+            <Stats stats={project.stats} stacked={portrait} />
+          </div>
+          {portrait && project.photo && <Photo photo={project.photo} />}
         </section>
       )}
 
@@ -130,22 +178,10 @@ export default async function ProjectPage({
         </section>
       )}
 
-      {project.photo && (
-        <figure className="pt-10">
-          <Image
-            src={project.photo.src}
-            alt={project.photo.alt}
-            width={project.photo.width}
-            height={project.photo.height}
-            sizes="(max-width: 720px) 100vw, 640px"
-            className={`w-full h-auto rounded ${
-              project.photo.height > project.photo.width ? "max-w-[420px]" : ""
-            }`}
-          />
-          <figcaption className="text-[13px] text-gray-500 mt-3">
-            {project.photo.caption}
-          </figcaption>
-        </figure>
+      {project.photo && !(portrait && project.stats) && (
+        <section className="pt-10">
+          <Photo photo={project.photo} />
+        </section>
       )}
 
       {/* Case study body */}

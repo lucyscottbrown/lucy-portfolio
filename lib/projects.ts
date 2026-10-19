@@ -112,7 +112,7 @@ export const projects: Project[] = [
   {
     slug: "shell-remote-sense",
     photo: {
-      src: "/photos/mine-singrauli-2019.jpg",
+      src: "/photos/mine-singrauli-2019-site.jpg",
       width: 1600,
       height: 1200,
       alt: "Lucy and three colleagues in hard hats and hi-vis vests on the steps of a large mining haul truck",
@@ -137,7 +137,7 @@ export const projects: Project[] = [
   {
     slug: "tulli",
     photo: {
-      src: "/photos/wind-fife-2019.jpg",
+      src: "/photos/wind-fife-2019-site.jpg",
       width: 1200,
       height: 1600,
       alt: "Lucy and a colleague in red hard hats in front of a wind turbine",
