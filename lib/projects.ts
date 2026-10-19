@@ -14,6 +14,8 @@ export type Project = {
   // A capture of the live tool, in public/, shown in place of stats.
   // width/height are the file's pixel size, so the page reserves the space.
   screenshot?: { src: string; width: number; height: number };
+  // A photo from the work itself, in public/photos/, shown with a caption.
+  photo?: { src: string; width: number; height: number; alt: string; caption: string };
 };
 
 export const projects: Project[] = [
@@ -109,6 +111,13 @@ export const projects: Project[] = [
   },
   {
     slug: "shell-remote-sense",
+    photo: {
+      src: "/photos/mine-singrauli-2019.jpg",
+      width: 260,
+      height: 620,
+      alt: "Lucy in a hard hat and hi-vis vest on the steps of a mining haul truck",
+      caption: "On a mine site visit in Singrauli, India, January 2019",
+    },
     stats: [
       { value: "$400k", label: "revenue from new B2B customers" },
       { value: "6", label: "new B2B customers" },
@@ -127,6 +136,13 @@ export const projects: Project[] = [
   },
   {
     slug: "tulli",
+    photo: {
+      src: "/photos/wind-fife-2019.jpg",
+      width: 900,
+      height: 1125,
+      alt: "Lucy in a red hard hat at a wind turbine site",
+      caption: "At a wind turbine site in Fife, Scotland, September 2019",
+    },
     stats: [
       { value: "$1.5M", label: "internal funding secured" },
       { value: "Award", label: "Special Recognition Award from Shell" },

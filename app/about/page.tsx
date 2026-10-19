@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About - Lucy Scott Brown",
@@ -16,6 +17,21 @@ export default function About() {
         <h1 className="text-[32px] font-medium tracking-tight mb-10">
           Lucy Scott Brown
         </h1>
+
+        <figure className="mb-10">
+          <Image
+            src="/photos/panel-2025.jpg"
+            alt="Lucy speaking on a panel, holding a microphone"
+            width={1400}
+            height={933}
+            sizes="(max-width: 640px) 100vw, 560px"
+            className="w-full h-auto rounded"
+            priority
+          />
+          <figcaption className="text-[13px] text-gray-500 mt-3">
+            Speaking on a panel, October 2025
+          </figcaption>
+        </figure>
 
         {/* Prose */}
         <div className="flex flex-col gap-5 text-[15px] leading-[1.75] text-gray-700">

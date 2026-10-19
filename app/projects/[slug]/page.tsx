@@ -86,7 +86,11 @@ export default async function ProjectPage({
           <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
             At a glance
           </h2>
-          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200 rounded overflow-hidden">
+          <dl
+            className={`grid grid-cols-1 ${
+              project.stats.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"
+            } gap-px bg-gray-200 border border-gray-200 rounded overflow-hidden`}
+          >
             {project.stats.map((stat) => (
               <div key={stat.label} className="bg-white p-5 flex flex-col gap-1">
                 <dt className="sr-only">{stat.label}</dt>
@@ -124,6 +128,22 @@ export default async function ProjectPage({
             Try the live tool →
           </a>
         </section>
+      )}
+
+      {project.photo && (
+        <figure className="pt-10">
+          <Image
+            src={project.photo.src}
+            alt={project.photo.alt}
+            width={project.photo.width}
+            height={project.photo.height}
+            sizes="260px"
+            className="w-full max-w-[260px] h-auto rounded"
+          />
+          <figcaption className="text-[13px] text-gray-500 mt-3">
+            {project.photo.caption}
+          </figcaption>
+        </figure>
       )}
 
       {/* Case study body */}
