@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function About() {
   return (
     <div className="max-w-[640px] mx-auto px-10">
@@ -34,24 +36,8 @@ export default function About() {
           </p>
         </div>
 
-        {/* Additional items */}
-        <div className="mt-14 pt-10 border-t border-gray-200 grid grid-cols-3 gap-6">
-          {[
-            { label: "Speaking", content: "Link to be added" },
-            { label: "Writing", content: "Link to be added" },
-            { label: "CV", content: "Link to be added" },
-          ].map(({ label, content }) => (
-            <div key={label} className="flex flex-col gap-1.5">
-              <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400">
-                {label}
-              </span>
-              <span className="text-[13px] text-gray-400">{content}</span>
-            </div>
-          ))}
-        </div>
-
         {/* Contact */}
-        <div className="mt-10 pt-8 border-t border-gray-200">
+        <div className="mt-14 pt-8 border-t border-gray-200">
           <div className="flex gap-4 text-[14px]">
             <a
               href="mailto:lucyscottbrown@gmail.com"
@@ -68,6 +54,10 @@ export default function About() {
             >
               LinkedIn
             </a>
+            <span className="text-gray-300">·</span>
+            <Link href="/cv" className="text-[#185FA5] hover:underline">
+              CV
+            </Link>
           </div>
         </div>
       </section>
