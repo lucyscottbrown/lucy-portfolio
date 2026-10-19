@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://lucyscottbrown.com"),
   title: "Lucy Scott Brown",
   description:
-    "Product, go-to-market, and positioning for companies at the point where things need to start working properly.",
+    "Lucy Scott Brown is a senior product manager who builds complex B2B products for technical users, across applied AI, industrial IoT and payments.",
 };
 
 export default function RootLayout({

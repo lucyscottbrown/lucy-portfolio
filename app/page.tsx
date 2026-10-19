@@ -15,21 +15,29 @@ export default function Home() {
       {/* ── Hero ── */}
       <section className="pt-14 pb-12 max-sm:pt-8 grid grid-cols-1 sm:grid-cols-[1fr_260px] gap-8 sm:gap-10 items-start">
         <div className="flex flex-col gap-4 sm:pt-4">
-          <p className="text-[13px] text-gray-500">Hey there,</p>
+          <p className="text-[13px] text-gray-500">Senior product manager · Dubai</p>
           <h1 className="text-[44px] max-sm:text-[32px] leading-[1.08] font-medium tracking-tight">
             I&rsquo;m Lucy Scott Brown.
           </h1>
           <p className="text-[18px] leading-[1.6] text-gray-600 max-w-[400px]">
-            I do product and GTM strategy for B2B tech companies. Most of my
-            work happens in the gap between the two, which is where things tend
-            to come unstuck.
+            I build complex B2B products for technical users in regulated and
+            high-stakes industries. My recent work covers applied AI, industrial
+            IoT and payments.
           </p>
-          <Link
-            href="/projects"
-            className="text-[15px] font-medium text-[#185FA5] hover:underline w-fit mt-1"
-          >
-            See my work →
-          </Link>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 mt-1">
+            <Link
+              href="/projects"
+              className="text-[15px] font-medium text-[#185FA5] hover:underline"
+            >
+              See my work →
+            </Link>
+            <Link
+              href="/cv"
+              className="text-[15px] font-medium text-[#185FA5] hover:underline"
+            >
+              Read my CV →
+            </Link>
+          </div>
 
           {/* Stats */}
           <div className="flex gap-10 mt-4 pt-4 border-t border-gray-100">
@@ -64,13 +72,13 @@ export default function Home() {
       {/* ── Chip strip ── */}
       <section className="border-t border-gray-200 py-5 flex flex-wrap gap-2">
         {[
-          "GTM strategy",
-          "Product",
-          "Crypto & payments",
-          "Blockchain analytics",
+          "Product strategy",
+          "Applied AI",
           "B2B SaaS",
+          "Industrial IoT",
           "Regulated markets",
-          "Early-growth stage",
+          "Payments & blockchain analytics",
+          "Go-to-market",
         ].map((tag) => (
           <span
             key={tag}
@@ -88,25 +96,27 @@ export default function Home() {
         </h2>
         <div className="flex flex-col gap-4">
           <p className="text-[15px] leading-[1.75] text-gray-600">
-            I&rsquo;m a senior product leader, 8+ years building and scaling B2B
-            products across crypto payments, blockchain analytics, IoT SaaS and
-            AI startups.
+            I&rsquo;m a senior product manager with 8+ years building and scaling
+            B2B products in industrial IoT, payments and blockchain analytics,
+            and applied AI.
           </p>
           <p className="text-[15px] leading-[1.75] text-gray-600">
-            I work best where the product is strong but the commercial story
-            hasn&rsquo;t landed yet (which is more companies than you&rsquo;d think).
+            I do my best work on products where the users are technical and the
+            product has to earn their trust before they act on it. At Shell, that
+            meant machine-learning insight that equipment operators relied on to
+            prevent failures. At Clavium, it meant risk scores that payment teams
+            used to screen transactions.
           </p>
           <p className="text-[15px] leading-[1.75] text-gray-600">
-            The work spans the full product lifecycle: market sizing and GTM
-            strategy, roadmap and OKRs, engineering delivery, and the internal
-            change management that makes it all stick. That last one is the
-            least glamorous bit and usually the one that decides whether any of
-            the rest of it works.
+            My work covers the full product lifecycle: discovery and market
+            sizing, product strategy, roadmaps and OKRs, and delivery with
+            engineering teams. I also lead the internal change that gets new
+            ways of working adopted, such as the company-wide AI working group I
+            set up at Clavium.
           </p>
           <p className="text-[15px] leading-[1.75] text-gray-600">
-            I&rsquo;ve led teams of up to 15 engineers, run market research across
-            four continents, and built cross-functional working practices that
-            outlast any single project.
+            I&rsquo;ve line-managed up to four product owners and worked with
+            engineering teams of up to 15 people.
           </p>
         </div>
       </section>

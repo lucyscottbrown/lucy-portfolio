@@ -164,6 +164,10 @@
 
   html, body { margin:0; padding:0; }
   body { background:var(--paper); }
+  /* Links back into the main site */
+  .site-back{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;font-family:var(--sans);font-size:13px;margin-bottom:28px;}
+  .site-back a{color:var(--accent);text-decoration:none;}
+  .site-back a:hover{text-decoration:underline;}
 </style>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -171,6 +175,7 @@
 <body>
 <div class="wrap">
   <div class="inner">
+    <nav class="site-back" aria-label="Site"><a href="/">← Lucy Scott Brown</a><a href="/projects/ai-scorecard">Read the case study →</a></nav>
     <header class="mast">
       <span class="eyebrow">Working prototype</span>
       <h1>Public-Sector AI Use-Case Scorecard</h1>

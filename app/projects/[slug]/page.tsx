@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { projects, getProject } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -78,6 +79,52 @@ export default async function ProjectPage({
           </a>
         )}
       </section>
+
+      {/* At a glance: results first, for readers who skim */}
+      {project.stats && (
+        <section className="pt-10">
+          <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
+            At a glance
+          </h2>
+          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200 rounded overflow-hidden">
+            {project.stats.map((stat) => (
+              <div key={stat.label} className="bg-white p-5 flex flex-col gap-1">
+                <dt className="sr-only">{stat.label}</dt>
+                <dd className="text-[32px] font-medium tracking-tight leading-none text-[#185FA5]">
+                  {stat.value}
+                </dd>
+                <dd className="text-[13px] leading-[1.5] text-gray-600 mt-2">
+                  {stat.label}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {project.screenshot && project.liveUrl && (
+        <section className="pt-10">
+          <a
+            href={project.liveUrl}
+            className="group block border border-gray-200 rounded overflow-hidden hover:border-gray-400 transition-colors"
+          >
+            <Image
+              src={project.screenshot.src}
+              alt={`Screenshot of the ${project.title} live tool`}
+              width={project.screenshot.width}
+              height={project.screenshot.height}
+              sizes="(max-width: 720px) 100vw, 640px"
+              className="w-full h-auto"
+            />
+          </a>
+          <a
+            href={project.liveUrl}
+            className="inline-block mt-3 text-[13px] text-[#185FA5] hover:underline"
+          >
+            Try the live tool →
+          </a>
+        </section>
+      )}
 
       {/* Case study body */}
       <section className="py-12 flex flex-col gap-12">

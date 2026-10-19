@@ -92,9 +92,14 @@ h2{font-family:var(--display);font-weight:600;font-size:clamp(24px,5vw,30px);lin
 .fade{animation:fade .35s ease both}
 @keyframes fade{from{opacity:.25;transform:translateY(4px)}to{opacity:1;transform:none}}
 footer{font-size:13px;color:var(--muted);text-align:center}
+  /* Links back into the main site */
+  .site-back{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;font-family:var(--body);font-size:13px;}
+  .site-back a{color:var(--accent);text-decoration:none;}
+  .site-back a:hover{text-decoration:underline;}
 </style>
 
 <div class="wrap">
+  <nav class="site-back" aria-label="Site"><a href="/">← Lucy Scott Brown</a></nav>
   <header>
     <svg class="glass" viewBox="0 0 120 170" aria-hidden="true">
       <defs><clipPath id="bowl"><path d="M28 12 H92 C94 58 86 86 60 92 C34 86 26 58 28 12 Z"/></clipPath></defs>

@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { readFile } from "node:fs/promises";
 
 // The link preview used when the site is shared (LinkedIn, Slack, iMessage).
-export const alt = "Lucy Scott Brown - Senior product leader";
+export const alt = "Lucy Scott Brown - Senior product manager";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,7 +28,7 @@ export default async function Image() {
           <div style={{ fontSize: 76, fontWeight: 600, color: "#0a0a0a", letterSpacing: -2 }}>
             Lucy Scott Brown
           </div>
-          <div style={{ fontSize: 36, color: "#4B5563" }}>Senior product leader</div>
+          <div style={{ fontSize: 36, color: "#4B5563" }}>Senior product manager</div>
           <div style={{ fontSize: 28, color: "#185FA5", marginTop: 24 }}>
             lucyscottbrown.com
           </div>

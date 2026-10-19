@@ -8,11 +8,18 @@ export type Project = {
   whatIDid: string;
   outcome: string;
   liveUrl?: string;
+  // Headline results shown at the top of the case study, so a skim reader
+  // sees them before the prose. Every figure must come from the CV.
+  stats?: { value: string; label: string }[];
+  // A capture of the live tool, in public/, shown in place of stats.
+  // width/height are the file's pixel size, so the page reserves the space.
+  screenshot?: { src: string; width: number; height: number };
 };
 
 export const projects: Project[] = [
   {
     slug: "triage",
+    screenshot: { src: "/screenshots/triage.png", width: 2560, height: 1540 },
     title: "Triage - AI Claims Copilot",
     subtitle: "Prototype · 2026 · Applied AI / insurance",
     tag: "Applied AI",
@@ -28,6 +35,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ai-scorecard",
+    screenshot: { src: "/screenshots/ai-scorecard.png", width: 2560, height: 1600 },
     title: "Public-Sector AI Use-Case Scorecard",
     subtitle: "Self-initiated · 2026 · Applied AI / public sector",
     tag: "Applied AI",
@@ -43,6 +51,11 @@ export const projects: Project[] = [
   },
   {
     slug: "lacunafit",
+    stats: [
+      { value: "£220k", label: "revenue over four years" },
+      { value: "48%", label: "returning customer rate" },
+      { value: "4.8/5", label: "average customer rating" },
+    ],
     title: "LacunaFit",
     subtitle: "Founder · 2020–2024 · DTC e-commerce, petite women's clothing",
     tag: "Venture Creation",
@@ -57,6 +70,11 @@ export const projects: Project[] = [
   },
   {
     slug: "clavium-gtm",
+    stats: [
+      { value: "$16M ARR", label: "serviceable market sized over five years" },
+      { value: "Up to 4", label: "product owners line-managed" },
+      { value: "10–15", label: "engineers across delivery teams" },
+    ],
     title: "Clavium - Treasury Manager GTM",
     subtitle: "Product Manager · 2025–2026 · Crypto payments",
     tag: "GTM Strategy",
@@ -71,6 +89,11 @@ export const projects: Project[] = [
   },
   {
     slug: "clavium-analytics",
+    stats: [
+      { value: "1,000+", label: "transactions a day through the risk tool" },
+      { value: "$50k+", label: "in cost savings" },
+      { value: "50%", label: "fewer user steps after the treasury integration" },
+    ],
     title: "The Workshop - Blockchain Analytics Platform",
     subtitle:
       "Product Owner → Senior PO → Product Manager · 2022–2024 · Blockchain analytics",
@@ -86,6 +109,11 @@ export const projects: Project[] = [
   },
   {
     slug: "shell-remote-sense",
+    stats: [
+      { value: "$400k", label: "revenue from new B2B customers" },
+      { value: "6", label: "new B2B customers" },
+      { value: "5", label: "markets in the global launch" },
+    ],
     title: "Shell Remote Sense",
     subtitle: "Product Manager · 2019–2022 · Industrial IoT / B2B SaaS",
     tag: "Industrial IoT",
@@ -99,6 +127,10 @@ export const projects: Project[] = [
   },
   {
     slug: "tulli",
+    stats: [
+      { value: "$1.5M", label: "internal funding secured" },
+      { value: "Award", label: "Special Recognition Award from Shell" },
+    ],
     title: "Tulli - Venture Creation, Early Stage",
     subtitle: "Product Lead · 2018–2019 · Wind energy / B2B",
     tag: "Venture Creation",
