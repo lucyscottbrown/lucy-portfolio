@@ -3,7 +3,7 @@ import { funProjects } from "@/lib/projects";
 export default function JustForFun() {
   return (
     <div className="flex flex-col gap-4">
-      <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400">
+      <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500">
         Just for fun
       </span>
       {funProjects.map((project) => (
@@ -19,7 +19,7 @@ export default function JustForFun() {
             <p className="text-[13px] leading-[1.6] text-gray-600">
               {project.description}
             </p>
-            <span className="text-[12px] font-medium text-[#8E1F3D] mt-1">
+            <span className="text-[13px] font-medium text-[#8E1F3D] mt-1">
               Take the quiz →
             </span>
           </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -11,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lucyscottbrown.com"),
   title: "Lucy Scott Brown",
   description:
     "Product, go-to-market, and positioning for companies at the point where things need to start working properly.",
@@ -26,6 +28,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-white text-[#0a0a0a]">
         <Nav />
         <main>{children}</main>
+        <Footer />
         <Analytics />
       </body>
     </html>

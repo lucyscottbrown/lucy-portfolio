@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function BookshelfPage() {
   return (
-    <div className="max-w-[720px] mx-auto px-10">
+    <div className="max-w-[720px] mx-auto px-10 max-sm:px-5">
       <section className="py-14">
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
           The wider lens
         </p>
         <h1 className="text-[32px] font-medium tracking-tight mb-3">

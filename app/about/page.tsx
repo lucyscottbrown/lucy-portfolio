@@ -1,10 +1,16 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About - Lucy Scott Brown",
+  description:
+    "Who I am, how I work, and the eight years of product work behind it.",
+};
 
 export default function About() {
   return (
-    <div className="max-w-[640px] mx-auto px-10">
+    <div className="max-w-[640px] mx-auto px-10 max-sm:px-5">
       <section className="py-14">
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
           About
         </p>
         <h1 className="text-[32px] font-medium tracking-tight mb-10">
@@ -36,30 +42,6 @@ export default function About() {
           </p>
         </div>
 
-        {/* Contact */}
-        <div className="mt-14 pt-8 border-t border-gray-200">
-          <div className="flex gap-4 text-[14px]">
-            <a
-              href="mailto:lucyscottbrown@gmail.com"
-              className="text-[#185FA5] hover:underline"
-            >
-              lucyscottbrown@gmail.com
-            </a>
-            <span className="text-gray-300">·</span>
-            <a
-              href="https://www.linkedin.com/in/lucyscottbrown"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#185FA5] hover:underline"
-            >
-              LinkedIn
-            </a>
-            <span className="text-gray-300">·</span>
-            <Link href="/cv" className="text-[#185FA5] hover:underline">
-              CV
-            </Link>
-          </div>
-        </div>
       </section>
     </div>
   );

@@ -14,7 +14,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  return { title: `${project.title} - Lucy Scott Brown` };
+  return {
+    title: `${project.title} - Lucy Scott Brown`,
+    description: project.description,
+  };
 }
 
 function ProseSection({
@@ -26,7 +29,7 @@ function ProseSection({
 }) {
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400">
+      <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500">
         {label}
       </span>
       <div className="flex flex-col gap-4">
@@ -50,12 +53,12 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   return (
-    <div className="max-w-[720px] mx-auto px-10">
+    <div className="max-w-[720px] mx-auto px-10 max-sm:px-5">
       {/* Header */}
       <section className="py-14 border-b border-gray-200">
         <Link
           href="/projects"
-          className="text-[12px] text-gray-400 hover:text-[#185FA5] transition-colors mb-6 inline-block"
+          className="text-[13px] text-gray-500 hover:text-[#185FA5] transition-colors mb-6 inline-block"
         >
           ← Projects
         </Link>
@@ -65,7 +68,7 @@ export default async function ProjectPage({
         <h1 className="text-[32px] font-medium tracking-tight leading-tight mb-3">
           {project.title}
         </h1>
-        <p className="text-[13px] text-gray-400">{project.subtitle}</p>
+        <p className="text-[13px] text-gray-500">{project.subtitle}</p>
         {project.liveUrl && (
           <a
             href={project.liveUrl}
@@ -84,19 +87,13 @@ export default async function ProjectPage({
       </section>
 
       {/* Footer nav */}
-      <section className="border-t border-gray-200 py-10 flex items-center justify-between">
+      <section className="border-t border-gray-200 py-10">
         <Link
           href="/projects"
           className="text-[13px] text-[#185FA5] hover:underline"
         >
           ← All projects
         </Link>
-        <a
-          href="mailto:lucyscottbrown@gmail.com"
-          className="text-[13px] text-[#185FA5] hover:underline"
-        >
-          Get in touch →
-        </a>
       </section>
     </div>
   );

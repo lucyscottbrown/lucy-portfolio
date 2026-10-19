@@ -1,15 +1,22 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { projects } from "@/lib/projects";
 import LiveBadge from "@/components/LiveBadge";
 import JustForFun from "@/components/JustForFun";
 
+export const metadata: Metadata = {
+  title: "Projects - Lucy Scott Brown",
+  description:
+    "Product work across applied AI, crypto, industrial IoT and early-stage ventures: the problem, what I did, and what came out of it.",
+};
+
 export default function Projects() {
   const [featured, ...rest] = projects;
 
   return (
-    <div className="max-w-[720px] mx-auto px-10">
+    <div className="max-w-[720px] mx-auto px-10 max-sm:px-5">
       <section className="py-14">
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
           Work
         </p>
         <h1 className="text-[32px] font-medium tracking-tight mb-3">
@@ -40,8 +47,8 @@ export default function Projects() {
                 <h2 className="text-[18px] font-medium leading-snug group-hover:text-[#185FA5] transition-colors">
                   {featured.title}
                 </h2>
-                <p className="text-[13px] text-gray-400">{featured.subtitle}</p>
-                <p className="text-[14px] leading-[1.6] text-gray-600 max-w-[420px]">
+                <p className="text-[13px] text-gray-500">{featured.subtitle}</p>
+                <p className="text-[15px] leading-[1.6] text-gray-600 max-w-[420px]">
                   {featured.description}
                 </p>
               </div>
@@ -49,7 +56,7 @@ export default function Projects() {
           </Link>
 
           {/* 2-col grid */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {rest.map((project) => (
               <Link
                 key={project.slug}
@@ -66,7 +73,7 @@ export default function Projects() {
                   <h2 className="text-[15px] font-medium leading-snug group-hover:text-[#185FA5] transition-colors">
                     {project.title}
                   </h2>
-                  <p className="text-[12px] text-gray-400">{project.subtitle}</p>
+                  <p className="text-[13px] text-gray-500">{project.subtitle}</p>
                   <p className="text-[13px] leading-[1.6] text-gray-500 mt-1">
                     {project.description}
                   </p>

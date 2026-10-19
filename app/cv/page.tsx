@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-6">
+    <h2 className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-6">
       {children}
     </h2>
   );
@@ -32,23 +32,23 @@ function Role({ role }: { role: CvRole }) {
           <h3 className="text-[15px] font-medium">
             {role.title}, {role.org}
           </h3>
-          <span className="text-[13px] text-gray-400 whitespace-nowrap">
+          <span className="text-[13px] text-gray-500 whitespace-nowrap">
             {role.dates}
           </span>
         </div>
-        <p className="text-[13px] text-gray-400 mt-1">
+        <p className="text-[13px] text-gray-500 mt-1">
           {role.context ? `${role.context} · ` : ""}
           {role.location}
         </p>
       </div>
       {role.note && (
-        <p className="text-[14px] leading-[1.7] text-gray-500 italic">
+        <p className="text-[15px] leading-[1.7] text-gray-500 italic">
           {role.note}
         </p>
       )}
       <ul className="flex flex-col gap-2 list-disc pl-5 marker:text-gray-300">
         {role.bullets.map((b) => (
-          <li key={b} className="text-[14px] leading-[1.7] text-gray-700">
+          <li key={b} className="text-[15px] leading-[1.7] text-gray-700">
             {b}
           </li>
         ))}
@@ -76,17 +76,17 @@ export default function CvPage() {
       <section className="py-14">
         <Link
           href="/about"
-          className="text-[12px] text-gray-400 hover:text-[#185FA5] transition-colors mb-6 inline-block"
+          className="text-[13px] text-gray-500 hover:text-[#185FA5] transition-colors mb-6 inline-block"
         >
           ← About me
         </Link>
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-4">
           CV
         </p>
         <h1 className="text-[32px] font-medium tracking-tight mb-3">
           Lucy Scott Brown
         </h1>
-        <p className="text-[13px] text-gray-400 mb-8">
+        <p className="text-[13px] text-gray-500 mb-8">
           Dubai, UAE ·{" "}
           <a
             href="mailto:lucyscottbrown@gmail.com"
@@ -114,16 +114,16 @@ export default function CvPage() {
         <SectionLabel>Education</SectionLabel>
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <h3 className="text-[15px] font-medium">{education.institution}</h3>
-          <span className="text-[13px] text-gray-400">{education.dates}</span>
+          <span className="text-[13px] text-gray-500">{education.dates}</span>
         </div>
-        <p className="text-[14px] text-gray-700 mt-1">{education.degree}</p>
+        <p className="text-[15px] text-gray-700 mt-1">{education.degree}</p>
       </section>
 
       <section className="border-t border-gray-200 py-12">
         <SectionLabel>Qualifications</SectionLabel>
         <ul className="flex flex-col gap-2">
           {qualifications.map((q) => (
-            <li key={q} className="text-[14px] leading-[1.7] text-gray-700">
+            <li key={q} className="text-[15px] leading-[1.7] text-gray-700">
               {q}
             </li>
           ))}
@@ -136,7 +136,7 @@ export default function CvPage() {
           {skills.map(({ label, value }) => (
             <div key={label}>
               <dt className="text-[13px] font-medium">{label}</dt>
-              <dd className="text-[14px] leading-[1.7] text-gray-700 mt-1">
+              <dd className="text-[15px] leading-[1.7] text-gray-700 mt-1">
                 {value}
               </dd>
             </div>

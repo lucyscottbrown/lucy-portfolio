@@ -31,8 +31,9 @@ export default function Nav() {
               <li key={href}>
                 <Link
                   href={href}
-                  className={`text-[13px] whitespace-nowrap transition-opacity duration-150 ${
-                    isActive ? "opacity-100" : "opacity-50 hover:opacity-100"
+                  aria-current={isActive ? "page" : undefined}
+                  className={`text-[13px] whitespace-nowrap transition-colors duration-150 ${
+                    isActive ? "text-[#0a0a0a]" : "text-gray-500 hover:text-[#0a0a0a]"
                   }`}
                 >
                   {shortLabel ? (

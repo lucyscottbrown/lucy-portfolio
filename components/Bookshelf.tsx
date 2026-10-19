@@ -102,24 +102,24 @@ function Detail({ book }: { book: Book }) {
         />
         <div>
           <h3 className="text-[18px] font-medium leading-snug">{book.title}</h3>
-          <p className="text-[13px] text-gray-400 mt-1">{book.author}</p>
+          <p className="text-[13px] text-gray-500 mt-1">{book.author}</p>
         </div>
       </div>
 
       {book.fullTitle && book.fullTitle !== book.title && (
-        <p className="text-[12px] italic text-gray-400 mb-4 leading-[1.5]">
+        <p className="text-[13px] italic text-gray-500 mb-4 leading-[1.5]">
           {book.fullTitle}
         </p>
       )}
 
-      <p className="text-[14px] leading-[1.7] text-gray-600">{book.blurb}</p>
+      <p className="text-[15px] leading-[1.7] text-gray-600">{book.blurb}</p>
 
       {book.takeaway && (
         <div className="mt-6 pt-6 border-t border-gray-100">
           <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#185FA5] mb-3">
             What I took from it
           </p>
-          <p className="text-[14px] leading-[1.7] text-gray-600">
+          <p className="text-[15px] leading-[1.7] text-gray-600">
             {book.takeaway}
           </p>
         </div>
@@ -127,10 +127,10 @@ function Detail({ book }: { book: Book }) {
 
       {book.postHook && (
         <div className="mt-6 pt-6 border-t border-gray-100">
-          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-3">
             I wrote about this
           </p>
-          <p className="text-[14px] leading-[1.7] text-gray-500 italic">
+          <p className="text-[15px] leading-[1.7] text-gray-500 italic">
             &ldquo;{book.postHook}&rdquo;
           </p>
           {book.postUrl && (
@@ -168,12 +168,12 @@ export default function Bookshelf({
 
   return (
     <div>
-      <p className="text-[13px] text-gray-400 mb-10">
+      <p className="text-[13px] text-gray-500 mb-10">
         Click a spine and I&rsquo;ll tell you what I made of it.
       </p>
 
       <section>
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-6">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-6">
           Read
         </p>
         <Shelf books={read} selected={selected} onSelect={toggle} />
@@ -181,7 +181,7 @@ export default function Bookshelf({
       </section>
 
       <section className="mt-14">
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-400 mb-6">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-gray-500 mb-6">
           Up next
         </p>
         <Shelf books={unread} selected={selected} onSelect={toggle} />
