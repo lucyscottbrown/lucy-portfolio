@@ -53,6 +53,13 @@ export const projects: Project[] = [
   },
   {
     slug: "lacunafit",
+    photo: {
+      src: "/photos/lacunafit-shoot.jpg",
+      width: 1496,
+      height: 1496,
+      alt: "Lucy modelling a denim jacket and black jeans in a white photo studio while a photographer takes pictures",
+      caption: "Modelling at a LacunaFit product shoot",
+    },
     stats: [
       { value: "£220k", label: "revenue over four years" },
       { value: "48%", label: "returning customer rate" },
