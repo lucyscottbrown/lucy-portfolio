@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       { source: "/ai-scorecard", destination: "/ai-scorecard.html" },
       { source: "/triage", destination: "/triage.html" },
       { source: "/what-wine-are-you", destination: "/what-wine-are-you.html" },
+      { source: "/merlo", destination: "/merlo.html" },
     ];
   },
 };

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merlo - learn wine in five minutes a day</title>
+<meta name="description" content="Merlo teaches you about wine in short daily lessons, so you feel confident choosing a bottle in a shop or from a restaurant wine list.">
+<meta name="theme-color" content="#F6F1E7">
+<meta property="og:title" content="Merlo - learn wine in five minutes a day">
+<meta property="og:description" content="Short daily lessons that help you choose wine with confidence.">
+<meta property="og:image" content="https://lucyscottbrown.com/merlo/icon.png">
+<meta property="og:url" content="https://lucyscottbrown.com/merlo">
+<link rel="icon" type="image/png" href="/merlo/icon.png">
+<link rel="apple-touch-icon" href="/merlo/apple-touch-icon.png">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Young+Serif&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ink:#1F1C1A; --paper:#F6F1E7; --card:#ECE4D5; --line:#DDD2BF;
+  --beak:#F5A524; --leaf:#4E7A3A; --hen:#7A5A45; --grape:#5B3A6B;
+  --display:"Young Serif",Georgia,serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.65 var(--body)}
+a{color:inherit}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+
+/* Hero */
+.hero{padding:64px 0 56px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+.hero .mark{width:min(340px,80%);height:auto;display:block;margin:0 0 32px}
+.hero .bird{width:100%;max-width:360px;height:auto;justify-self:center}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;text-align:center;padding:48px 0 40px;gap:8px}
+  .hero .mark{margin:0 auto 28px}
+  .hero .bird{max-width:220px;order:-1}
+  .hero h1,.hero .lede{margin-left:auto;margin-right:auto}
+  .hero h1{max-width:12em;text-wrap:balance}
+}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.2;margin:0}
+h1{font-size:clamp(30px,5vw,44px);max-width:18ch;margin:0 0 18px;text-wrap:balance}
+.lede{font-size:19px;max-width:28em;margin:0;color:var(--hen)}
+
+/* Sections */
+section{border-top:1.5px solid var(--line);padding:56px 0}
+.label{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hen);margin:0 0 10px}
+h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:32px}
+
+/* Screens */
+.screens{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+@media (max-width:760px){.screens{grid-template-columns:1fr;gap:44px;max-width:320px;margin:0 auto}}
+.phone{margin:0 0 20px;border:7px solid var(--ink);border-radius:34px;overflow:hidden;background:var(--paper);
+  box-shadow:0 18px 40px -18px rgba(31,28,26,.45)}
+.phone img{display:block;width:100%;height:auto}
+.screens h3{font-size:20px;margin-bottom:6px}
+.screens p{margin:0;font-size:16px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+@media (max-width:760px){.split{grid-template-columns:1fr;gap:48px}}
+.split p{margin:0 0 14px}
+.split h2{margin-bottom:16px}
+.story img{width:150px;height:auto;display:block;margin:0 0 16px}
+
+footer{padding:40px 0 56px;font-size:14px;color:var(--hen)}
+footer p{margin:0 0 8px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 20px;margin-bottom:16px}
+footer a{color:var(--ink);text-underline-offset:3px}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="hero">
+    <div>
+      <img class="mark" src="/merlo/wordmark.png" width="992" height="312" alt="Merlo">
+      <h1>Learn wine in five minutes a day</h1>
+      <p class="lede">Merlo teaches you about wine in short daily lessons, so you feel confident choosing a bottle in a shop or from a restaurant wine list.</p>
+    </div>
+    <img class="bird" src="/merlo/bird-grape.png" width="370" height="285" alt="Merlo the blackbird, holding a grape in its beak">
+  </header>
+
+  <section aria-labelledby="how">
+    <p class="label">How it works</p>
+    <h2 id="how">A little each day, and it stays with you</h2>
+    <div class="screens">
+      <div>
+        <figure class="phone"><img src="/merlo/screen-trail-footprints.jpg" width="600" height="1298" alt="The Merlo home screen: a winding trail of lessons, each with its title, starting with Inside a grape" loading="lazy"></figure>
+        <h3>Short daily lessons</h3>
+        <p>The main grapes, styles and regions, how to read a label, and how to match wine with food - one small step at a time.</p>
+      </div>
+      <div>
+        <figure class="phone"><img src="/merlo/screen-lesson.jpg" width="600" height="1298" alt="A lesson question asking what the pulp of a grape is mostly made of, answered correctly" loading="lazy"></figure>
+        <h3>Reviews at the right moment</h3>
+        <p>Merlo brings back what you've learned just before you'd forget it, so it sticks rather than fading after a week.</p>
+      </div>
+      <div class="taste">
+        <figure class="phone"><img src="/merlo/screen-tasting.jpg" width="600" height="1298" alt="A tasting of a Merlot, with red fruit, black fruit and oak picked as aromas" loading="lazy"></figure>
+        <h3>A tasting journal</h3>
+        <p>When you open a bottle, a two-minute guided tasting compares your notes with what's typical for that wine.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="split">
+      <div>
+        <p class="label">Learning, not drinking</p>
+        <h2>You never need a glass to keep your streak</h2>
+        <p>Every lesson and review works without wine. Tasting is there for when you happen to open a bottle, and it's never needed to keep your streak going.</p>
+        <p>Merlo is for people who enjoy wine but feel unsure in front of a wine list. It explains jargon when it uses it, and it never assumes you already know the answer.</p>
+      </div>
+      <div class="story">
+        <img src="/merlo/bird-singing.png" width="360" height="363" alt="" loading="lazy">
+        <p class="label">Why a blackbird?</p>
+        <h2>Named after the grape thief</h2>
+        <p>Merlot is thought to be named after the blackbird (<i>merle</i> in French), which loved eating the ripe grapes. <i>Merlo</i> is Italian for blackbird - and Merlo is that bird.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <nav aria-label="Merlo links">
+    <a href="/merlo/privacy">Privacy policy</a>
+    <a href="mailto:lucyscottbrown@gmail.com">Contact</a>
+    <a href="/">Made by Lucy Scott Brown</a>
+  </nav>
+  <p>Merlo is for adults of legal drinking age. It teaches about wine and does not sell alcohol.</p>
+</footer>
+</body>
+</html>
