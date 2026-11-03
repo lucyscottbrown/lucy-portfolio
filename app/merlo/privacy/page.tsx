@@ -57,7 +57,7 @@ export default function MerloPrivacyPage() {
           Privacy policy
         </h1>
         <p className="text-[13px] text-gray-500 mb-8">
-          Last updated: 28 October 2026
+          Last updated: 3 November 2026
         </p>
         <p className="text-[15px] leading-[1.75] text-gray-700">
           Merlo is an app for learning about wine. It is made by Lucy Scott
@@ -72,7 +72,7 @@ export default function MerloPrivacyPage() {
           items={[
             "Merlo has no accounts. Your progress, reviews, streak and tasting notes are stored only on your phone.",
             "If you agree, the app sends data on how you use it to PostHog, an analytics service, so that I can improve it. You can change your mind at any time in Settings.",
-            "If you use the wine lookup, the name you type is sent to my lookup service and to Anthropic, so that the app can identify the wine.",
+            "If you use the wine lookup, the name you type or the photo of the label you take is sent to my lookup service and to Anthropic, so that the app can identify the wine.",
             "I do not sell your data, show adverts, or use your data to target you.",
           ]}
         />
@@ -130,31 +130,37 @@ export default function MerloPrivacyPage() {
 
       <Section title="The wine lookup">
         <p>
-          When you log a tasting, you can type the name of a wine and ask the
-          app to identify its grape and region. If you do, the app sends what
-          you typed, together with the app&apos;s own list of grapes and
-          regions, to my lookup service. The lookup service is hosted by Vercel
+          When you log a tasting, you can ask the app to identify a wine&apos;s
+          grape and region, either by typing its name or by photographing its
+          label. You can take the photo with the camera or choose one you have
+          already taken. If you do, the app sends what you typed or a smaller
+          copy of the photo, together with the app&apos;s own list of grapes
+          and regions, to my lookup service. The app only uses the camera or
+          your photos when you tap the button to do so, and only sends the one
+          photo you take or choose. The lookup service is hosted by Vercel
           and sends the request to Anthropic, whose AI model identifies the
           wine. The result is sent back to your phone. Both Vercel and
           Anthropic are based in the United States.
         </p>
         <List
           items={[
-            "I do not store what you type. The lookup service uses your IP address briefly to stop it being overused, and does not keep it. Vercel keeps its standard request logs for a short time.",
+            "I do not store what you type or the photo. The lookup service uses your IP address briefly to stop it being overused, and does not keep it. Vercel keeps its standard request logs for a short time.",
             "Anthropic processes the request on my behalf. Under its terms, it does not use the request to train its models, and it deletes it within 30 days, unless it needs to keep it longer to deal with misuse.",
             "My legal basis for this is my legitimate interest in providing the feature you asked to use. If you prefer not to use it, you can log the wine yourself instead.",
           ]}
         />
         <p>
           Avoid typing personal information into the wine lookup, because it
-          is only meant for wine names.
+          is only meant for wine names. When you photograph a label, try to
+          keep people and anything personal out of the picture.
         </p>
       </Section>
 
       <Section title="Transfers outside the UK">
         <p>
           PostHog stores usage data in the EU. The wine lookup sends what you
-          type to Vercel and Anthropic in the United States. These transfers
+          type, or the label photo, to Vercel and Anthropic in the United
+          States. These transfers
           are covered by the safeguards in each provider&apos;s data processing
           terms.
         </p>
